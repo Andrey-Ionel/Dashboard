@@ -51,5 +51,48 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+    <array>
+        <string>BebasNeue-Regular.ttf</string>
+        <string>Gotham-Black.ttf</string>
+        <string>Gotham-Bold.otf</string>
+        <string>Gotham-Book.otf</string>
+        <string>Gotham-Light.otf</string>
+        <string>Gotham-Medium.otf</string>
+        <string>Work Sans_black_italic.ttf</string>
+        <string>Work Sans_black.ttf</string>
+        <string>Work Sans_bold_italic.ttf</string>
+        <string>Work Sans_bold.ttf</string>
+        <string>Work Sans_extra_bold_italic.ttf</string>
+        <string>Work Sans_extra_bold.ttf</string>
+        <string>Work Sans_extra_light_italic.ttf</string>
+        <string>Work Sans_extra_light.ttf</string>
+        <string>Work Sans_italic.ttf</string>
+        <string>Work Sans_light_italic.ttf</string>
+        <string>Work Sans_light.ttf</string>
+        <string>Work Sans_medium_italic.ttf</string>
+        <string>Work Sans_medium.ttf</string>
+        <string>Work Sans_semi_bold_italic.ttf</string>
+        <string>Work Sans_semi_bold.ttf</string>
+        <string>Work Sans_thin_italic.ttf</string>
+        <string>Work Sans_thin.ttf</string>
+        <string>Work Sans.ttf</string>
+        <string>AntDesign.ttf</string>
+        <string>Entypo.ttf</string>
+        <string>EvilIcons.ttf</string>
+        <string>Feather.ttf</string>
+        <string>FontAwesome.ttf</string>
+        <string>FontAwesome5_Brands.ttf</string>
+        <string>FontAwesome5_Regular.ttf</string>
+        <string>FontAwesome5_Solid.ttf</string>
+        <string>Fontisto.ttf</string>
+        <string>Foundation.ttf</string>
+        <string>Ionicons.ttf</string>
+        <string>MaterialCommunityIcons.ttf</string>
+        <string>MaterialIcons.ttf</string>
+        <string>Octicons.ttf</string>
+        <string>SimpleLineIcons.ttf</string>
+        <string>Zocial.ttf</string>
+    </array>
 </dict>
 </plist>

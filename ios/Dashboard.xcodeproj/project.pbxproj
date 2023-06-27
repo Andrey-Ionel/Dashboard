@@ -14,6 +14,30 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-Dashboard-DashboardTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Dashboard-DashboardTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		84D9431F2A49DA0F00958BF7 /* Work Sans_light_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D943072A49DA0E00958BF7 /* Work Sans_light_italic.ttf */; };
+		84D943202A49DA0F00958BF7 /* Work Sans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D943082A49DA0E00958BF7 /* Work Sans.ttf */; };
+		84D943212A49DA0F00958BF7 /* Gotham-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84D943092A49DA0E00958BF7 /* Gotham-Light.otf */; };
+		84D943222A49DA0F00958BF7 /* Work Sans_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D9430A2A49DA0E00958BF7 /* Work Sans_light.ttf */; };
+		84D943232A49DA0F00958BF7 /* BebasNeue-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D9430B2A49DA0E00958BF7 /* BebasNeue-Regular.ttf */; };
+		84D943242A49DA0F00958BF7 /* Gotham-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D9430C2A49DA0E00958BF7 /* Gotham-Black.ttf */; };
+		84D943252A49DA0F00958BF7 /* Work Sans_thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D9430D2A49DA0E00958BF7 /* Work Sans_thin.ttf */; };
+		84D943262A49DA0F00958BF7 /* Gotham-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84D9430E2A49DA0E00958BF7 /* Gotham-Bold.otf */; };
+		84D943272A49DA0F00958BF7 /* Work Sans_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D9430F2A49DA0E00958BF7 /* Work Sans_bold.ttf */; };
+		84D943282A49DA0F00958BF7 /* Work Sans_extra_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D943102A49DA0E00958BF7 /* Work Sans_extra_light.ttf */; };
+		84D943292A49DA0F00958BF7 /* Gotham-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84D943112A49DA0F00958BF7 /* Gotham-Book.otf */; };
+		84D9432A2A49DA0F00958BF7 /* Work Sans_extra_light_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D943122A49DA0F00958BF7 /* Work Sans_extra_light_italic.ttf */; };
+		84D9432B2A49DA0F00958BF7 /* Work Sans_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D943132A49DA0F00958BF7 /* Work Sans_medium.ttf */; };
+		84D9432C2A49DA0F00958BF7 /* Work Sans_semi_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D943142A49DA0F00958BF7 /* Work Sans_semi_bold.ttf */; };
+		84D9432D2A49DA0F00958BF7 /* Work Sans_extra_bold_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D943152A49DA0F00958BF7 /* Work Sans_extra_bold_italic.ttf */; };
+		84D9432E2A49DA0F00958BF7 /* Work Sans_medium_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D943162A49DA0F00958BF7 /* Work Sans_medium_italic.ttf */; };
+		84D9432F2A49DA0F00958BF7 /* Work Sans_extra_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D943172A49DA0F00958BF7 /* Work Sans_extra_bold.ttf */; };
+		84D943302A49DA0F00958BF7 /* Work Sans_black_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D943182A49DA0F00958BF7 /* Work Sans_black_italic.ttf */; };
+		84D943312A49DA0F00958BF7 /* Work Sans_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D943192A49DA0F00958BF7 /* Work Sans_black.ttf */; };
+		84D943322A49DA0F00958BF7 /* Work Sans_semi_bold_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D9431A2A49DA0F00958BF7 /* Work Sans_semi_bold_italic.ttf */; };
+		84D943332A49DA0F00958BF7 /* Work Sans_bold_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D9431B2A49DA0F00958BF7 /* Work Sans_bold_italic.ttf */; };
+		84D943342A49DA0F00958BF7 /* Work Sans_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D9431C2A49DA0F00958BF7 /* Work Sans_italic.ttf */; };
+		84D943352A49DA0F00958BF7 /* Gotham-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84D9431D2A49DA0F00958BF7 /* Gotham-Medium.otf */; };
+		84D943362A49DA0F00958BF7 /* Work Sans_thin_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84D9431E2A49DA0F00958BF7 /* Work Sans_thin_italic.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +66,30 @@
 		5B7EB9410499542E8C5724F5 /* Pods-Dashboard-DashboardTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dashboard-DashboardTests.debug.xcconfig"; path = "Target Support Files/Pods-Dashboard-DashboardTests/Pods-Dashboard-DashboardTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Dashboard.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Dashboard.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Dashboard/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		84D943072A49DA0E00958BF7 /* Work Sans_light_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_light_italic.ttf"; path = "../../src/assets/fonts/Work Sans_light_italic.ttf"; sourceTree = "<group>"; };
+		84D943082A49DA0E00958BF7 /* Work Sans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans.ttf"; path = "../../src/assets/fonts/Work Sans.ttf"; sourceTree = "<group>"; };
+		84D943092A49DA0E00958BF7 /* Gotham-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-Light.otf"; path = "../../src/assets/fonts/Gotham-Light.otf"; sourceTree = "<group>"; };
+		84D9430A2A49DA0E00958BF7 /* Work Sans_light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_light.ttf"; path = "../../src/assets/fonts/Work Sans_light.ttf"; sourceTree = "<group>"; };
+		84D9430B2A49DA0E00958BF7 /* BebasNeue-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "BebasNeue-Regular.ttf"; path = "../../src/assets/fonts/BebasNeue-Regular.ttf"; sourceTree = "<group>"; };
+		84D9430C2A49DA0E00958BF7 /* Gotham-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-Black.ttf"; path = "../../src/assets/fonts/Gotham-Black.ttf"; sourceTree = "<group>"; };
+		84D9430D2A49DA0E00958BF7 /* Work Sans_thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_thin.ttf"; path = "../../src/assets/fonts/Work Sans_thin.ttf"; sourceTree = "<group>"; };
+		84D9430E2A49DA0E00958BF7 /* Gotham-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-Bold.otf"; path = "../../src/assets/fonts/Gotham-Bold.otf"; sourceTree = "<group>"; };
+		84D9430F2A49DA0E00958BF7 /* Work Sans_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_bold.ttf"; path = "../../src/assets/fonts/Work Sans_bold.ttf"; sourceTree = "<group>"; };
+		84D943102A49DA0E00958BF7 /* Work Sans_extra_light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_extra_light.ttf"; path = "../../src/assets/fonts/Work Sans_extra_light.ttf"; sourceTree = "<group>"; };
+		84D943112A49DA0F00958BF7 /* Gotham-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-Book.otf"; path = "../../src/assets/fonts/Gotham-Book.otf"; sourceTree = "<group>"; };
+		84D943122A49DA0F00958BF7 /* Work Sans_extra_light_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_extra_light_italic.ttf"; path = "../../src/assets/fonts/Work Sans_extra_light_italic.ttf"; sourceTree = "<group>"; };
+		84D943132A49DA0F00958BF7 /* Work Sans_medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_medium.ttf"; path = "../../src/assets/fonts/Work Sans_medium.ttf"; sourceTree = "<group>"; };
+		84D943142A49DA0F00958BF7 /* Work Sans_semi_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_semi_bold.ttf"; path = "../../src/assets/fonts/Work Sans_semi_bold.ttf"; sourceTree = "<group>"; };
+		84D943152A49DA0F00958BF7 /* Work Sans_extra_bold_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_extra_bold_italic.ttf"; path = "../../src/assets/fonts/Work Sans_extra_bold_italic.ttf"; sourceTree = "<group>"; };
+		84D943162A49DA0F00958BF7 /* Work Sans_medium_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_medium_italic.ttf"; path = "../../src/assets/fonts/Work Sans_medium_italic.ttf"; sourceTree = "<group>"; };
+		84D943172A49DA0F00958BF7 /* Work Sans_extra_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_extra_bold.ttf"; path = "../../src/assets/fonts/Work Sans_extra_bold.ttf"; sourceTree = "<group>"; };
+		84D943182A49DA0F00958BF7 /* Work Sans_black_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_black_italic.ttf"; path = "../../src/assets/fonts/Work Sans_black_italic.ttf"; sourceTree = "<group>"; };
+		84D943192A49DA0F00958BF7 /* Work Sans_black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_black.ttf"; path = "../../src/assets/fonts/Work Sans_black.ttf"; sourceTree = "<group>"; };
+		84D9431A2A49DA0F00958BF7 /* Work Sans_semi_bold_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_semi_bold_italic.ttf"; path = "../../src/assets/fonts/Work Sans_semi_bold_italic.ttf"; sourceTree = "<group>"; };
+		84D9431B2A49DA0F00958BF7 /* Work Sans_bold_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_bold_italic.ttf"; path = "../../src/assets/fonts/Work Sans_bold_italic.ttf"; sourceTree = "<group>"; };
+		84D9431C2A49DA0F00958BF7 /* Work Sans_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_italic.ttf"; path = "../../src/assets/fonts/Work Sans_italic.ttf"; sourceTree = "<group>"; };
+		84D9431D2A49DA0F00958BF7 /* Gotham-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-Medium.otf"; path = "../../src/assets/fonts/Gotham-Medium.otf"; sourceTree = "<group>"; };
+		84D9431E2A49DA0F00958BF7 /* Work Sans_thin_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Work Sans_thin_italic.ttf"; path = "../../src/assets/fonts/Work Sans_thin_italic.ttf"; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Dashboard-DashboardTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dashboard-DashboardTests.release.xcconfig"; path = "Target Support Files/Pods-Dashboard-DashboardTests/Pods-Dashboard-DashboardTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -116,6 +164,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				84D943062A49D8F300958BF7 /* Resourses */,
 				13B07FAE1A68108700A75B9A /* Dashboard */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* DashboardTests */,
@@ -135,6 +184,37 @@
 				00E356EE1AD99517003FC87E /* DashboardTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		84D943062A49D8F300958BF7 /* Resourses */ = {
+			isa = PBXGroup;
+			children = (
+				84D9430B2A49DA0E00958BF7 /* BebasNeue-Regular.ttf */,
+				84D9430C2A49DA0E00958BF7 /* Gotham-Black.ttf */,
+				84D9430E2A49DA0E00958BF7 /* Gotham-Bold.otf */,
+				84D943112A49DA0F00958BF7 /* Gotham-Book.otf */,
+				84D943092A49DA0E00958BF7 /* Gotham-Light.otf */,
+				84D9431D2A49DA0F00958BF7 /* Gotham-Medium.otf */,
+				84D943182A49DA0F00958BF7 /* Work Sans_black_italic.ttf */,
+				84D943192A49DA0F00958BF7 /* Work Sans_black.ttf */,
+				84D9431B2A49DA0F00958BF7 /* Work Sans_bold_italic.ttf */,
+				84D9430F2A49DA0E00958BF7 /* Work Sans_bold.ttf */,
+				84D943152A49DA0F00958BF7 /* Work Sans_extra_bold_italic.ttf */,
+				84D943172A49DA0F00958BF7 /* Work Sans_extra_bold.ttf */,
+				84D943122A49DA0F00958BF7 /* Work Sans_extra_light_italic.ttf */,
+				84D943102A49DA0E00958BF7 /* Work Sans_extra_light.ttf */,
+				84D9431C2A49DA0F00958BF7 /* Work Sans_italic.ttf */,
+				84D943072A49DA0E00958BF7 /* Work Sans_light_italic.ttf */,
+				84D9430A2A49DA0E00958BF7 /* Work Sans_light.ttf */,
+				84D943162A49DA0F00958BF7 /* Work Sans_medium_italic.ttf */,
+				84D943132A49DA0F00958BF7 /* Work Sans_medium.ttf */,
+				84D9431A2A49DA0F00958BF7 /* Work Sans_semi_bold_italic.ttf */,
+				84D943142A49DA0F00958BF7 /* Work Sans_semi_bold.ttf */,
+				84D9431E2A49DA0F00958BF7 /* Work Sans_thin_italic.ttf */,
+				84D9430D2A49DA0E00958BF7 /* Work Sans_thin.ttf */,
+				84D943082A49DA0E00958BF7 /* Work Sans.ttf */,
+			);
+			path = Resourses;
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
@@ -242,8 +322,32 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84D9432D2A49DA0F00958BF7 /* Work Sans_extra_bold_italic.ttf in Resources */,
+				84D943262A49DA0F00958BF7 /* Gotham-Bold.otf in Resources */,
+				84D943362A49DA0F00958BF7 /* Work Sans_thin_italic.ttf in Resources */,
+				84D943322A49DA0F00958BF7 /* Work Sans_semi_bold_italic.ttf in Resources */,
+				84D9431F2A49DA0F00958BF7 /* Work Sans_light_italic.ttf in Resources */,
+				84D943312A49DA0F00958BF7 /* Work Sans_black.ttf in Resources */,
+				84D943342A49DA0F00958BF7 /* Work Sans_italic.ttf in Resources */,
+				84D943292A49DA0F00958BF7 /* Gotham-Book.otf in Resources */,
+				84D943202A49DA0F00958BF7 /* Work Sans.ttf in Resources */,
+				84D943232A49DA0F00958BF7 /* BebasNeue-Regular.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				84D943222A49DA0F00958BF7 /* Work Sans_light.ttf in Resources */,
+				84D9432C2A49DA0F00958BF7 /* Work Sans_semi_bold.ttf in Resources */,
+				84D943282A49DA0F00958BF7 /* Work Sans_extra_light.ttf in Resources */,
+				84D943272A49DA0F00958BF7 /* Work Sans_bold.ttf in Resources */,
+				84D9432E2A49DA0F00958BF7 /* Work Sans_medium_italic.ttf in Resources */,
+				84D9432F2A49DA0F00958BF7 /* Work Sans_extra_bold.ttf in Resources */,
+				84D943332A49DA0F00958BF7 /* Work Sans_bold_italic.ttf in Resources */,
+				84D9432A2A49DA0F00958BF7 /* Work Sans_extra_light_italic.ttf in Resources */,
+				84D943352A49DA0F00958BF7 /* Gotham-Medium.otf in Resources */,
+				84D943302A49DA0F00958BF7 /* Work Sans_black_italic.ttf in Resources */,
+				84D943242A49DA0F00958BF7 /* Gotham-Black.ttf in Resources */,
+				84D943252A49DA0F00958BF7 /* Work Sans_thin.ttf in Resources */,
+				84D943212A49DA0F00958BF7 /* Gotham-Light.otf in Resources */,
+				84D9432B2A49DA0F00958BF7 /* Work Sans_medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -562,7 +666,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -634,7 +738,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

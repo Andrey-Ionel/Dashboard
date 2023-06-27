@@ -11,15 +11,21 @@
     "pod install": "npx pod-install ios"
   },
   "dependencies": {
+    "formik": "^2.4.2",
+    "i18next": "^23.2.3",
     "react": "18.1.0",
     "react-dom": "^18.2.0",
-    "react-native": "0.70.10"
+    "react-i18next": "^13.0.1",
+    "react-native": "0.70.10",
+    "react-native-fast-image": "^8.6.3",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
-    "@react-native-community/eslint-config": "^2.0.0",
     "@react-native-async-storage/async-storage": "^1.18.2",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@types/lodash": "^4.14.195",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.2.0",
     "@types/react-native": "^0.71.5",
@@ -27,12 +33,12 @@
     "@types/redux": "^3.6.0",
     "@types/redux-thunk": "^2.1.0",
     "axios": "^1.4.0",
-    "lodash": "^4.17.21",
-    "moment": "^2.29.4",
     "babel-jest": "^26.6.3",
     "eslint": "^7.32.0",
     "jest": "^26.6.3",
+    "lodash": "^4.17.21",
     "metro-react-native-babel-preset": "0.72.3",
+    "moment": "^2.29.4",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-typescript-transformer": "^1.2.13",
     "react-redux": "^8.0.7",
