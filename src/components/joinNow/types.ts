@@ -7,15 +7,13 @@ export const commonInputProps = {
   importantForAutofill: 'yes' as const,
 };
 
-export interface SignInFormFields {
+export interface JoinNowFormFields {
+  nickname: string;
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
-export interface SignInComponentProps {
-  onForgotPassword?: () => void;
-  onError?: (value: string) => void;
-  onUsernameChange?: (value: string) => void;
-  loading?: boolean;
+export interface JoinNowProps {
   navigation: NavigationProp<ParamListBase>;
 }

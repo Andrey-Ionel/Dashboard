@@ -20,39 +20,42 @@ import {
 import i18n from '../../lib/translations';
 import { isIos } from '../../lib/constants';
 
-import {
-  commonInputProps,
-  SignInComponentProps,
-  SignInFormFields,
-} from './types';
+import { commonInputProps, JoinNowProps, JoinNowFormFields } from './types';
 
 import removeIcon from '../../assets/icons/removeIcon.png';
-import { styles } from './styles';
+import { styles } from '../signIn';
 
 const generateFormSchema = () =>
   defineSchema({
+    nickname: regexSchemaPresets()
+      .firstName()
+      .required(i18n.t('errors.nickname')),
     email: regexSchemaPresets().email.required(i18n.t('errors.email')),
     password: regexSchemaPresets().createAccountPassword.required(
       i18n.t('errors.password'),
     ),
+    confirmPassword: regexSchemaPresets().confirmAccountPassword.required(
+      i18n.t('errors.password'),
+    ),
   });
 
-export const SignInComponent: FC<SignInComponentProps> = ({
-  onForgotPassword,
-  loading,
-  navigation,
-}) => {
+export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
   const [showRemove, setShowRemove] = useState<boolean>(false);
+  const [showConfirmRemove, setShowConfirmRemove] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
 
   const onFocusPassword = (): void => {
     setShowRemove(true);
   };
 
-  const onBlurPassword = (password?: string) => (): void => {
-    if (!password?.length) {
-      setShowRemove(false);
-    }
+  const onFocusConfirmPassword = (): void => {
+    setShowConfirmRemove(true);
+  };
+
+  const goToSignIn = (): void => {
+    navigation.navigate('SignIn');
   };
 
   const onPressIconPassword =
@@ -61,31 +64,35 @@ export const SignInComponent: FC<SignInComponentProps> = ({
       setShowRemove(false);
     };
 
+  const onPressIconConfirmPassword =
+    (setFieldValue: (field: string, value: any) => void) => (): void => {
+      setFieldValue('confirmPassword', '');
+      setShowConfirmRemove(false);
+    };
+
   const onPressShowButton = (): void => {
     setShowPassword(!showPassword);
   };
 
-  const goToForgotPassword = (): void => {
-    onForgotPassword?.();
+  const onPressShowConfirmButton = (): void => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
-  const goToJoinNow = (): void => {
-    navigation.navigate('JoinNow');
-  };
-
-  const onLoginSubmit: FormikConfig<SignInFormFields>['onSubmit'] = async (
-    values: SignInFormFields,
+  const onLoginSubmit: FormikConfig<JoinNowFormFields>['onSubmit'] = async (
+    values: JoinNowFormFields,
   ) => {
     console.log("'zxc', 'values'", values);
   };
 
-  const formikConfig: FormikConfig<SignInFormFields> = {
+  const formikConfig: FormikConfig<JoinNowFormFields> = {
     validateOnChange: true,
     validateOnBlur: true,
     validationSchema: generateFormSchema(),
     initialValues: {
+      nickname: '',
       email: '',
       password: '',
+      confirmPassword: '',
     },
     onSubmit: onLoginSubmit,
   };
@@ -94,10 +101,10 @@ export const SignInComponent: FC<SignInComponentProps> = ({
     <ScreenWrapper
       screenStyle={styles.flex}
       needInSafeArea={true}
-      fixedComponentTop={<Header title={'signIn'} />}>
+      fixedComponentTop={<Header title={'joinNow'} />}>
       <View style={styles.container}>
         <Formik {...formikConfig}>
-          {(props: FormikProps<SignInFormFields>) => {
+          {(props: FormikProps<JoinNowFormFields>) => {
             const {
               handleSubmit,
               setFieldValue,
@@ -107,7 +114,9 @@ export const SignInComponent: FC<SignInComponentProps> = ({
               setFieldTouched,
               isValid,
             } = props;
+
             const isPasswordValue = !!values.password.length;
+            const isConfirmPasswordValue = !!values.confirmPassword.length;
             const isReadyToSubmit = isPasswordValue && isValid;
 
             const onSubmit = (event: GestureResponderEvent) => {
@@ -122,14 +131,48 @@ export const SignInComponent: FC<SignInComponentProps> = ({
               return setFieldValue(field, value, shouldValidate);
             };
 
+            const setNicknameTouched = () => {
+              setFieldTouched('nickname', true);
+            };
+
             const setEmailTouched = () => {
               setFieldTouched('email', true);
             };
+
+            const onBlurPassword = (password?: string) => (): void => {
+              if (!password?.length) {
+                setShowRemove(false);
+              }
+              setFieldTouched('password', true);
+            };
+
+            const onBlurConfirmPassword =
+              (confirmPassword?: string) => (): void => {
+                if (!confirmPassword?.length) {
+                  setShowConfirmRemove(false);
+                }
+                setFieldTouched('confirmPassword', true);
+              };
 
             return (
               <KeyboardAvoidingView
                 enabled
                 behavior={isIos ? 'padding' : 'height'}>
+                <FormTextInput
+                  {...textInputProps.email}
+                  textInputStyles={[styles.input, styles.borderRect]}
+                  errorsMessage={errors.nickname || ''}
+                  required={true}
+                  title={'Nickname'}
+                  formFieldName={'nickname'}
+                  setFormikField={setFieldValue}
+                  value={values.nickname}
+                  touched={!!touched.nickname}
+                  imageWrapperStyle={styles.iconWrapperStyle}
+                  {...commonInputProps}
+                  imageStyles={styles.imageStyles}
+                  onBlur={setNicknameTouched}
+                />
                 <FormTextInput
                   {...textInputProps.email}
                   textInputStyles={[styles.input, styles.borderRect]}
@@ -180,28 +223,53 @@ export const SignInComponent: FC<SignInComponentProps> = ({
                   formFieldName={'password'}
                   {...commonInputProps}
                 />
-                <View style={styles.friendlyUAContainer}>
-                  <TouchableOpacity onPress={goToForgotPassword}>
-                    <Text style={styles.linkText}>
-                      {i18n.t('signInSection.forgotPassword')}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                <FormTextInput
+                  {...textInputProps.currentPassword}
+                  containerStyles={styles.passwordContainer}
+                  textInputStyles={[styles.borderRect, styles.passwordInput]}
+                  errorsMessage={errors.confirmPassword || ''}
+                  required={true}
+                  iconUrl={showConfirmRemove && removeIcon}
+                  imageWrapperStyle={[
+                    styles.iconWrapperStyle,
+                    isConfirmPasswordValue && styles.iconWithButton,
+                  ]}
+                  imageStyles={styles.iconStyles}
+                  title={'Confirm Password'}
+                  onFocus={onFocusConfirmPassword}
+                  onBlur={onBlurConfirmPassword(values.confirmPassword)}
+                  iconPress={onPressIconConfirmPassword(setFieldValue)}
+                  innerButton={isConfirmPasswordValue}
+                  innerButtonText={
+                    !showConfirmPassword
+                      ? i18n.t('signInSection.show')
+                      : i18n.t('signInSection.hide')
+                  }
+                  innerButtonWrapperStyle={styles.showWrapperStyle}
+                  innerButtonTextStyle={styles.showText}
+                  innerButtonPress={onPressShowConfirmButton}
+                  setFormikField={setFieldValue}
+                  value={values.confirmPassword}
+                  secureTextEntry={!showConfirmPassword}
+                  touched={!!touched.confirmPassword}
+                  formFieldName={'confirmPassword'}
+                  {...commonInputProps}
+                />
                 <TouchableOpacity
                   onPress={onSubmit}
                   style={styles.btn}
-                  disabled={loading || !isReadyToSubmit}>
+                  disabled={!isReadyToSubmit}>
                   <Text style={styles.btnText}>
-                    {i18n.t('signInSection.submit')}
+                    {i18n.t('signInSection.joinNow')}
                   </Text>
                 </TouchableOpacity>
                 <View style={styles.rowContainer}>
                   <Text style={styles.haveAccountText}>
-                    {i18n.t('signInSection.dontHaveAccount')}
+                    {i18n.t('signInSection.haveAccount')}
                   </Text>
-                  <TouchableOpacity onPress={goToJoinNow}>
+                  <TouchableOpacity onPress={goToSignIn}>
                     <Text style={styles.linkText}>
-                      {i18n.t('signInSection.joinNow')}
+                      {i18n.t('signInSection.signIn')}
                     </Text>
                   </TouchableOpacity>
                 </View>

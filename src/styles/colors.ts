@@ -7,6 +7,7 @@ export interface Theme {
   textSecondary: string;
   textError: string;
   textPopover: string;
+  link: string;
 }
 
 export const lightMode: Theme = {
@@ -18,6 +19,7 @@ export const lightMode: Theme = {
   textSecondary: '#fff',
   textError: '#CC0000',
   textPopover: '#231F20',
+  link: '#033654',
 };
 
 export default lightMode;

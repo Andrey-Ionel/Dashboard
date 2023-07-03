@@ -1,4 +1,4 @@
 export * from './SignInComponent';
-export * from './SignInHeader';
+export * from '../Header';
 export * from './types';
 export * from './styles';

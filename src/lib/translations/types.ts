@@ -4,12 +4,17 @@ export interface ProjectTranslationKeys {
     submit: string;
     show: string;
     hide: string;
+    forgotPassword: string;
+    dontHaveAccount: string;
+    haveAccount: string;
+    joinNow: string;
   };
   errors: {
     phoneLength: string;
     phone: string;
     required: string;
     requiredField: string;
+    nickname: string;
     password: string;
     email: string;
     noEmail: string;

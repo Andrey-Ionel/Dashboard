@@ -1,8 +1,8 @@
 import React from 'react';
-import SignInContainer from './src/containers/SignInContainer';
+import { Navigation } from './src/components/Navigation';
 
 const App: () => React.ReactNode = () => {
-  return <SignInContainer />;
+  return <Navigation />;
 };
 
 export default App;

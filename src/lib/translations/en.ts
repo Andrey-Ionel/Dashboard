@@ -2,14 +2,19 @@ import { ProjectTranslationKeys } from './types';
 
 export const en: ProjectTranslationKeys = {
   signInSection: {
-    signIn: 'Sign in',
+    signIn: 'Sign In',
     submit: 'Sign In',
     show: 'Show',
     hide: 'Hide',
+    forgotPassword: 'Forgot Password?',
+    dontHaveAccount: 'Don`t have an account? ',
+    haveAccount: 'Already have an account? ',
+    joinNow: 'Join Now',
   },
   errors: {
     required: 'is required',
     requiredField: 'This field is required',
+    nickname: 'Please enter Nickname',
     email: 'Please provide a valid email address.',
     noEmail: 'Please add an email address.',
     password: 'Please enter password.',
