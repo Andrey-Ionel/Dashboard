@@ -1,2 +1,2 @@
-import { JoinNow } from '../components/joinNow/JoinNow';
+import { JoinNow } from '../components/joinNow';
 export default JoinNow;

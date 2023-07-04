@@ -1,6 +1,7 @@
 export interface Theme {
   // Background
   systemBackgroundGradient: string[];
+  backgroundPrimary: string;
 
   // Separator
   separatorPrimary: string;
@@ -16,6 +17,8 @@ export interface Theme {
 export const lightMode: Theme = {
   // Background
   systemBackgroundGradient: ['#fff', '#EBEBEB', '#CDCDCD', '#828C91'],
+  backgroundPrimary: '#141414',
+
   // Separator
   separatorPrimary: '#999999',
 

@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     borderRadius: 0,
-    backgroundColor: colors.textPrimary,
+    backgroundColor: colors.backgroundPrimary,
     padding: 15,
     lineHeight: 22,
     fontSize: 18,
