@@ -1,6 +1,11 @@
 import { ProjectTranslationKeys } from './types';
 
 export const en: ProjectTranslationKeys = {
+  header: {
+    signIn: 'Sign In',
+    joinNow: 'Join Now',
+    home: 'Home',
+  },
   signInSection: {
     signIn: 'Sign In',
     submit: 'Sign In',
@@ -45,6 +50,10 @@ export const en: ProjectTranslationKeys = {
       'Shipping restrictions apply. Please select or add another address to ' +
       'proceed.',
     somethingWrong: 'Something went wrong, please try again',
+    emailAlreadyInUse: 'That email address is already in use!',
+    emailInvalid: 'That email address is invalid!',
+    noSuchEmail: 'No such email address, please try again!',
+    wrongPassword: 'Wrong password, please try again!',
   },
   inputTitles: {
     required: '*',
@@ -94,5 +103,8 @@ export const en: ProjectTranslationKeys = {
       checkBoxEmail: 'Send me exclusive offers and events by email',
       usEmail: 'Send me exclusive offers and events by U.S. mail',
     },
+  },
+  home: {
+    logout: 'Logout',
   },
 };

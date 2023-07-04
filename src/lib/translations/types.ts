@@ -1,4 +1,9 @@
 export interface ProjectTranslationKeys {
+  header: {
+    signIn: string;
+    joinNow: string;
+    home: string;
+  };
   signInSection: {
     signIn: string;
     submit: string;
@@ -37,6 +42,10 @@ export interface ProjectTranslationKeys {
     checkoutValidation: string;
     shippingRestrictions: string;
     somethingWrong: string;
+    emailAlreadyInUse: string;
+    emailInvalid: string;
+    noSuchEmail: string;
+    wrongPassword: string;
   };
   inputTitles: {
     required: string;
@@ -86,5 +95,8 @@ export interface ProjectTranslationKeys {
       checkBoxEmail: string;
       usEmail: string;
     };
+  };
+  home: {
+    logout: string;
   };
 }

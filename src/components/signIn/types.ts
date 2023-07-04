@@ -14,8 +14,5 @@ export interface SignInFormFields {
 
 export interface SignInComponentProps {
   onForgotPassword?: () => void;
-  onError?: (value: string) => void;
-  onUsernameChange?: (value: string) => void;
-  loading?: boolean;
   navigation: NavigationProp<ParamListBase>;
 }

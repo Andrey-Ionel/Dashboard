@@ -1,2 +1,2 @@
-import { SignInComponent } from '../components/signIn';
-export default SignInComponent;
+import { SignIn } from '../components/signIn';
+export default SignIn;

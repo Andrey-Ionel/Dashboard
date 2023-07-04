@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import {
   GestureResponderEvent,
   KeyboardAvoidingView,
@@ -11,6 +11,8 @@ import { Formik, FormikConfig, FormikProps } from 'formik';
 import FormTextInput from '../TextInput';
 import { ScreenWrapper } from '../ScreenWrapper';
 import { Header } from '../Header';
+import { Loading } from '../Loading';
+import { AuthContext } from '../../context/AuthContext';
 
 import {
   defineSchema,
@@ -18,12 +20,12 @@ import {
   textInputProps,
 } from '../../lib/formikPresets';
 import i18n from '../../lib/translations';
-import { isIos } from '../../lib/constants';
+import { HIT_SLOP_AREA, isIos } from '../../lib/constants';
 
 import { commonInputProps, JoinNowProps, JoinNowFormFields } from './types';
 
 import removeIcon from '../../assets/icons/removeIcon.png';
-import { styles } from '../signIn';
+import { styles } from './styles';
 
 const generateFormSchema = () =>
   defineSchema({
@@ -45,6 +47,7 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
+  const { createNewAccount, loading } = useContext(AuthContext);
 
   const onFocusPassword = (): void => {
     setShowRemove(true);
@@ -81,7 +84,12 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
   const onLoginSubmit: FormikConfig<JoinNowFormFields>['onSubmit'] = async (
     values: JoinNowFormFields,
   ) => {
-    console.log("'zxc', 'values'", values);
+    createNewAccount(
+      values?.email,
+      values?.password,
+      values?.nickname,
+      navigation,
+    );
   };
 
   const formikConfig: FormikConfig<JoinNowFormFields> = {
@@ -96,6 +104,10 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
     },
     onSubmit: onLoginSubmit,
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <ScreenWrapper
@@ -258,6 +270,7 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
                 <TouchableOpacity
                   onPress={onSubmit}
                   style={styles.btn}
+                  hitSlop={HIT_SLOP_AREA}
                   disabled={!isReadyToSubmit}>
                   <Text style={styles.btnText}>
                     {i18n.t('signInSection.joinNow')}
@@ -267,7 +280,9 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
                   <Text style={styles.haveAccountText}>
                     {i18n.t('signInSection.haveAccount')}
                   </Text>
-                  <TouchableOpacity onPress={goToSignIn}>
+                  <TouchableOpacity
+                    hitSlop={HIT_SLOP_AREA}
+                    onPress={goToSignIn}>
                     <Text style={styles.linkText}>
                       {i18n.t('signInSection.signIn')}
                     </Text>

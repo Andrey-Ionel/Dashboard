@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 export const Header: FC<HeaderProps> = ({ title }) => {
   return (
     <View style={styles.header}>
-      <Text style={styles.title}>{i18n.t(`signInSection.${title}`)}</Text>
+      <Text style={styles.title}>{i18n.t(`header.${title}`)}</Text>
     </View>
   );
 };

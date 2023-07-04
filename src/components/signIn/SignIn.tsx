@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import {
   GestureResponderEvent,
   KeyboardAvoidingView,
@@ -17,8 +17,9 @@ import {
   regexSchemaPresets,
   textInputProps,
 } from '../../lib/formikPresets';
-import i18n from '../../lib/translations';
-import { isIos } from '../../lib/constants';
+
+import { AuthContext } from '../../context/AuthContext';
+import { Loading } from '../Loading';
 
 import {
   commonInputProps,
@@ -26,8 +27,11 @@ import {
   SignInFormFields,
 } from './types';
 
-import removeIcon from '../../assets/icons/removeIcon.png';
+import i18n from '../../lib/translations';
+import { HIT_SLOP_AREA, isIos } from '../../lib/constants';
 import { styles } from './styles';
+
+import removeIcon from '../../assets/icons/removeIcon.png';
 
 const generateFormSchema = () =>
   defineSchema({
@@ -37,11 +41,11 @@ const generateFormSchema = () =>
     ),
   });
 
-export const SignInComponent: FC<SignInComponentProps> = ({
+export const SignIn: FC<SignInComponentProps> = ({
   onForgotPassword,
-  loading,
   navigation,
 }) => {
+  const { login, loading } = useContext(AuthContext);
   const [showRemove, setShowRemove] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -76,7 +80,7 @@ export const SignInComponent: FC<SignInComponentProps> = ({
   const onLoginSubmit: FormikConfig<SignInFormFields>['onSubmit'] = async (
     values: SignInFormFields,
   ) => {
-    console.log("'zxc', 'values'", values);
+    login(values?.email, values?.password, navigation);
   };
 
   const formikConfig: FormikConfig<SignInFormFields> = {
@@ -89,6 +93,10 @@ export const SignInComponent: FC<SignInComponentProps> = ({
     },
     onSubmit: onLoginSubmit,
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <ScreenWrapper
@@ -181,7 +189,9 @@ export const SignInComponent: FC<SignInComponentProps> = ({
                   {...commonInputProps}
                 />
                 <View style={styles.friendlyUAContainer}>
-                  <TouchableOpacity onPress={goToForgotPassword}>
+                  <TouchableOpacity
+                    hitSlop={HIT_SLOP_AREA}
+                    onPress={goToForgotPassword}>
                     <Text style={styles.linkText}>
                       {i18n.t('signInSection.forgotPassword')}
                     </Text>
@@ -189,6 +199,7 @@ export const SignInComponent: FC<SignInComponentProps> = ({
                 </View>
                 <TouchableOpacity
                   onPress={onSubmit}
+                  hitSlop={HIT_SLOP_AREA}
                   style={styles.btn}
                   disabled={loading || !isReadyToSubmit}>
                   <Text style={styles.btnText}>
@@ -199,7 +210,9 @@ export const SignInComponent: FC<SignInComponentProps> = ({
                   <Text style={styles.haveAccountText}>
                     {i18n.t('signInSection.dontHaveAccount')}
                   </Text>
-                  <TouchableOpacity onPress={goToJoinNow}>
+                  <TouchableOpacity
+                    hitSlop={HIT_SLOP_AREA}
+                    onPress={goToJoinNow}>
                     <Text style={styles.linkText}>
                       {i18n.t('signInSection.joinNow')}
                     </Text>

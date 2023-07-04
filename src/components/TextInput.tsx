@@ -17,6 +17,7 @@ import Image, {
 } from 'react-native-fast-image';
 
 import i18n from '../lib/translations';
+import { HIT_SLOP_AREA } from '../lib/constants';
 
 import { NativeSyntheticEvent } from 'react-native/Libraries/Types/CoreEventTypes';
 import { TextInputEndEditingEventData } from 'react-native/Libraries/Components/TextInput/TextInput';
@@ -351,6 +352,7 @@ const FormTextInput: FC<FormTextInputType> = props => {
         )}
         {!!iconUrl && (
           <TouchableOpacity
+            hitSlop={HIT_SLOP_AREA}
             style={imageWrapperStyle}
             onPress={iconPress}
             disabled={!!iconPressDisable}>
@@ -360,6 +362,7 @@ const FormTextInput: FC<FormTextInputType> = props => {
         {!!innerButton && (
           <TouchableOpacity
             style={innerButtonWrapperStyle}
+            hitSlop={HIT_SLOP_AREA}
             onPress={handlePressInnerButton}
             disabled={
               innerButtonDisabled || isPasswordInput ? false : !!errorsMessage
