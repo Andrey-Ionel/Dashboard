@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react';
+import React, { FC, useContext, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import { Header } from './Header';
@@ -10,7 +10,13 @@ import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import i18n from '../lib/translations';
 import { fonts } from '../styles/fonts';
 import colors from '../styles/colors';
-import { HIT_SLOP_AREA } from '../lib/constants';
+import { HIT_SLOP_AREA, logError } from '../lib/constants';
+import {
+  ImageLibraryOptions,
+  ImagePickerResponse,
+  launchImageLibrary,
+  MediaType,
+} from 'react-native-image-picker';
 
 export interface HomeProps {
   navigation: NavigationProp<ParamListBase>;
@@ -42,6 +48,22 @@ const styles = StyleSheet.create({
 
 export const Home: FC<HomeProps> = ({ navigation }) => {
   const { logOut, loading } = useContext(AuthContext);
+
+  useEffect(() => {
+    addPhoto().catch(e => logError(e));
+  }, []);
+
+  const options = {
+    mediaType: 'photo' as MediaType,
+    quality: 1,
+    allowsEditing: true,
+  };
+
+  const addPhoto = async () => {
+    let result: ImagePickerResponse;
+    result = await launchImageLibrary(options as ImageLibraryOptions);
+    console.log("'zxc', 'result'", result);
+  };
 
   const logoutUser = () => {
     logOut?.(navigation);

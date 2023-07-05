@@ -13,6 +13,5 @@ export interface SignInFormFields {
 }
 
 export interface SignInComponentProps {
-  onForgotPassword?: () => void;
   navigation: NavigationProp<ParamListBase>;
 }

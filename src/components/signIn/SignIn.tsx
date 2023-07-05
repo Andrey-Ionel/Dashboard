@@ -41,10 +41,7 @@ const generateFormSchema = () =>
     ),
   });
 
-export const SignIn: FC<SignInComponentProps> = ({
-  onForgotPassword,
-  navigation,
-}) => {
+export const SignIn: FC<SignInComponentProps> = ({ navigation }) => {
   const { login, loading } = useContext(AuthContext);
   const [showRemove, setShowRemove] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -67,10 +64,6 @@ export const SignIn: FC<SignInComponentProps> = ({
 
   const onPressShowButton = (): void => {
     setShowPassword(!showPassword);
-  };
-
-  const goToForgotPassword = (): void => {
-    onForgotPassword?.();
   };
 
   const goToJoinNow = (): void => {
@@ -188,15 +181,7 @@ export const SignIn: FC<SignInComponentProps> = ({
                   formFieldName={'password'}
                   {...commonInputProps}
                 />
-                <View style={styles.friendlyUAContainer}>
-                  <TouchableOpacity
-                    hitSlop={HIT_SLOP_AREA}
-                    onPress={goToForgotPassword}>
-                    <Text style={styles.linkText}>
-                      {i18n.t('signInSection.forgotPassword')}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                <View style={styles.friendlyUAContainer} />
                 <TouchableOpacity
                   onPress={onSubmit}
                   hitSlop={HIT_SLOP_AREA}
