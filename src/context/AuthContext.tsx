@@ -1,11 +1,14 @@
 import React, { Context, createContext, useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { User } from '../components/joinNow/types';
-import { Alert } from 'react-native';
+import { User } from '../components/joinNow';
 
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
+import firebase from '@react-native-firebase/app';
+import messaging from '@react-native-firebase/messaging';
+
 import {
   AsyncStorageKeys,
   getStorageValue,
@@ -21,8 +24,68 @@ export const AuthProvider = ({ children }: any) => {
   const [loading, setLoading] = useState<boolean>(false);
   const usersCollection = firestore()?.collection('users');
 
+  const firebaseConfig = {
+    apiKey: 'AIzaSyDgk_ZLfGXU_wCHoyqF9VHS51FEDiATdzA',
+    authDomain: 'dashboard-6ecae.firebaseapp.com',
+    projectId: 'dashboard-6ecae',
+    storageBucket: 'dashboard-6ecae.appspot.com',
+    messagingSenderId: '814351911525',
+    appId: '1:814351911525:web:6e6d1c33cb32ccf8f0548c',
+    measurementId: 'G-ZMH93WSLGY',
+  };
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig).catch(e => logError(e));
+  }
+
+  const requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      messaging()
+        .getToken()
+        .then(token => {
+          console.log("'zxc', 'token'", token);
+        });
+      console.log('Authorization status:', authStatus);
+    } else {
+      logError('Failed token status');
+    }
+  };
+
   useEffect(() => {
     isLoggedIn().catch(e => logError(e));
+    requestUserPermission().catch(e => logError(e));
+
+    // Check whether an initial notification is available
+    messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        if (remoteMessage) {
+          Alert.alert(
+            'Notification caused app to open from quit state:',
+            JSON.stringify(remoteMessage.notification),
+          );
+        }
+      });
+
+    // Assume a message-notification contains a "type" property in the data payload of the screen to open
+    messaging().onNotificationOpenedApp(async remoteMessage => {
+      Alert.alert(
+        'Notification caused app to open from background state:',
+        JSON.stringify(remoteMessage.notification),
+      );
+    });
+
+    // setAppMessaging().catch(e => logError(e));
+
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+
+    return unsubscribe;
   }, []);
 
   const createNewAccount = (

@@ -49,12 +49,12 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
     useState<boolean>(false);
   const { createNewAccount, loading } = useContext(AuthContext);
 
-  const onFocusPassword = (): void => {
-    setShowRemove(true);
-  };
-
-  const onFocusConfirmPassword = (): void => {
-    setShowConfirmRemove(true);
+  const onFocus = (field: string) => () => {
+    if (field === 'password') {
+      setShowRemove(true);
+    } else {
+      setShowConfirmRemove(true);
+    }
   };
 
   const goToSignIn = (): void => {
@@ -62,23 +62,23 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
   };
 
   const onPressIconPassword =
-    (setFieldValue: (field: string, value: any) => void) => (): void => {
-      setFieldValue('password', '');
-      setShowRemove(false);
+    (setFieldValue: (field: string, value: any) => void, field: string) =>
+    (): void => {
+      if (field === 'password') {
+        setFieldValue('password', '');
+        setShowRemove(false);
+      } else {
+        setFieldValue('confirmPassword', '');
+        setShowConfirmRemove(false);
+      }
     };
 
-  const onPressIconConfirmPassword =
-    (setFieldValue: (field: string, value: any) => void) => (): void => {
-      setFieldValue('confirmPassword', '');
-      setShowConfirmRemove(false);
-    };
-
-  const onPressShowButton = (): void => {
-    setShowPassword(!showPassword);
-  };
-
-  const onPressShowConfirmButton = (): void => {
-    setShowConfirmPassword(!showConfirmPassword);
+  const onPressShowButton = (field: string) => () => {
+    if (field === 'password') {
+      setShowPassword(!showPassword);
+    } else {
+      setShowConfirmPassword(!showConfirmPassword);
+    }
   };
 
   const onLoginSubmit: FormikConfig<JoinNowFormFields>['onSubmit'] = async (
@@ -143,35 +143,30 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
               return setFieldValue(field, value, shouldValidate);
             };
 
-            const setNicknameTouched = () => {
-              setFieldTouched('nickname', true);
+            const setTouched = (field: string) => () => {
+              setFieldTouched(field, true);
             };
 
-            const setEmailTouched = () => {
-              setFieldTouched('email', true);
-            };
-
-            const onBlurPassword = (password?: string) => (): void => {
-              if (!password?.length) {
-                setShowRemove(false);
-              }
-              setFieldTouched('password', true);
-            };
-
-            const onBlurConfirmPassword =
-              (confirmPassword?: string) => (): void => {
-                if (!confirmPassword?.length) {
+            const onBlur = (password: string, field: string) => (): void => {
+              if (field === 'password') {
+                if (!password?.length) {
+                  setShowRemove(false);
+                }
+                setFieldTouched('password', true);
+              } else {
+                if (!password?.length) {
                   setShowConfirmRemove(false);
                 }
                 setFieldTouched('confirmPassword', true);
-              };
+              }
+            };
 
             return (
               <KeyboardAvoidingView
                 enabled
                 behavior={isIos ? 'padding' : 'height'}>
                 <FormTextInput
-                  {...textInputProps.email}
+                  {...textInputProps.nickname}
                   textInputStyles={[styles.input, styles.borderRect]}
                   errorsMessage={errors.nickname || ''}
                   required={true}
@@ -183,7 +178,7 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
                   imageWrapperStyle={styles.iconWrapperStyle}
                   {...commonInputProps}
                   imageStyles={styles.imageStyles}
-                  onBlur={setNicknameTouched}
+                  onBlur={setTouched('nickname')}
                 />
                 <FormTextInput
                   {...textInputProps.email}
@@ -201,7 +196,7 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
                   ]}
                   {...commonInputProps}
                   imageStyles={styles.imageStyles}
-                  onBlur={setEmailTouched}
+                  onBlur={setTouched('email')}
                 />
                 <FormTextInput
                   {...textInputProps.currentPassword}
@@ -216,9 +211,9 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
                   ]}
                   imageStyles={styles.iconStyles}
                   title={'Password'}
-                  onFocus={onFocusPassword}
-                  onBlur={onBlurPassword(values.password)}
-                  iconPress={onPressIconPassword(setFieldValue)}
+                  onFocus={onFocus('password')}
+                  onBlur={onBlur(values.password, 'password')}
+                  iconPress={onPressIconPassword(setFieldValue, 'password')}
                   innerButton={isPasswordValue}
                   innerButtonText={
                     !showPassword
@@ -227,7 +222,7 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
                   }
                   innerButtonWrapperStyle={styles.showWrapperStyle}
                   innerButtonTextStyle={styles.showText}
-                  innerButtonPress={onPressShowButton}
+                  innerButtonPress={onPressShowButton('password')}
                   setFormikField={setFieldValue}
                   value={values.password}
                   secureTextEntry={!showPassword}
@@ -248,9 +243,12 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
                   ]}
                   imageStyles={styles.iconStyles}
                   title={'Confirm Password'}
-                  onFocus={onFocusConfirmPassword}
-                  onBlur={onBlurConfirmPassword(values.confirmPassword)}
-                  iconPress={onPressIconConfirmPassword(setFieldValue)}
+                  onFocus={onFocus('confirmPassword')}
+                  onBlur={onBlur(values.confirmPassword, 'confirmPassword')}
+                  iconPress={onPressIconPassword(
+                    setFieldValue,
+                    'confirmPassword',
+                  )}
                   innerButton={isConfirmPasswordValue}
                   innerButtonText={
                     !showConfirmPassword
@@ -259,7 +257,7 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
                   }
                   innerButtonWrapperStyle={styles.showWrapperStyle}
                   innerButtonTextStyle={styles.showText}
-                  innerButtonPress={onPressShowConfirmButton}
+                  innerButtonPress={onPressShowButton('confirmPassword')}
                   setFormikField={setFieldValue}
                   value={values.confirmPassword}
                   secureTextEntry={!showConfirmPassword}

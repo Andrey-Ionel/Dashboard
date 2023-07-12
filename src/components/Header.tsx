@@ -7,6 +7,7 @@ import { fonts } from '../styles/fonts';
 
 interface HeaderProps {
   title: string;
+  name?: string;
 }
 
 const styles = StyleSheet.create({
@@ -27,10 +28,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Header: FC<HeaderProps> = ({ title }) => {
+export const Header: FC<HeaderProps> = ({ title, name }) => {
   return (
     <View style={styles.header}>
-      <Text style={styles.title}>{i18n.t(`header.${title}`)}</Text>
+      <Text style={styles.title}>
+        {i18n.t(`header.${title}`) + `${name?.length ? name : ''}`}
+      </Text>
     </View>
   );
 };

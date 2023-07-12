@@ -150,6 +150,7 @@ export const regexSchemaPresets = () => {
 
 export type FormFieldType =
   | 'phone'
+  | 'nickname'
   | 'firstName'
   | 'lastName'
   | 'address1'
@@ -168,6 +169,11 @@ export const textInputProps: Record<
   FormFieldType,
   Partial<FormTextInputType>
 > = {
+  nickname: {
+    keyboardType: isIos ? 'name-phone-pad' : 'default',
+    textContentType: 'givenName',
+    returnKeyType: 'done',
+  },
   firstName: {
     keyboardType: isIos ? 'name-phone-pad' : 'default',
     textContentType: 'givenName',

@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import { Header } from './Header';
@@ -6,17 +6,20 @@ import { ScreenWrapper } from './ScreenWrapper';
 import { AuthContext } from '../context/AuthContext';
 import { Loading } from './Loading';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
-
-import i18n from '../lib/translations';
-import { fonts } from '../styles/fonts';
-import colors from '../styles/colors';
-import { HIT_SLOP_AREA, logError } from '../lib/constants';
 import {
   ImageLibraryOptions,
   ImagePickerResponse,
   launchImageLibrary,
   MediaType,
 } from 'react-native-image-picker';
+import firestore, {
+  FirebaseFirestoreTypes,
+} from '@react-native-firebase/firestore';
+
+import i18n from '../lib/translations';
+import { fonts } from '../styles/fonts';
+import colors from '../styles/colors';
+import { HIT_SLOP_AREA, logError } from '../lib/constants';
 
 export interface HomeProps {
   navigation: NavigationProp<ParamListBase>;
@@ -47,10 +50,15 @@ const styles = StyleSheet.create({
 });
 
 export const Home: FC<HomeProps> = ({ navigation }) => {
-  const { logOut, loading } = useContext(AuthContext);
+  const { logOut, loading, userInfo } = useContext(AuthContext);
+  const [userName, setUserName] = useState('');
+  const needOpen = false;
 
   useEffect(() => {
-    addPhoto().catch(e => logError(e));
+    if (needOpen) {
+      addPhoto().catch(e => logError(e));
+    }
+    getUserData().catch(e => logError(e));
   }, []);
 
   const options = {
@@ -65,6 +73,13 @@ export const Home: FC<HomeProps> = ({ navigation }) => {
     console.log("'zxc', 'result'", result);
   };
 
+  const getUserData = async () => {
+    const user: FirebaseFirestoreTypes.DocumentSnapshot<FirebaseFirestoreTypes.DocumentData> =
+      await firestore().collection('users').doc(userInfo?.uid).get();
+    setUserName(user?.data()?.nickname);
+    console.log("'zxc', 'user'", user?.data());
+  };
+
   const logoutUser = () => {
     logOut?.(navigation);
   };
@@ -76,7 +91,7 @@ export const Home: FC<HomeProps> = ({ navigation }) => {
     <ScreenWrapper
       screenStyle={styles.flex}
       needInSafeArea={true}
-      fixedComponentTop={<Header title={'home'} />}>
+      fixedComponentTop={<Header title={'welcome'} name={userName} />}>
       <TouchableOpacity
         onPress={logoutUser}
         style={styles.btn}

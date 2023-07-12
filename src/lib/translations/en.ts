@@ -4,7 +4,7 @@ export const en: ProjectTranslationKeys = {
   header: {
     signIn: 'Sign In',
     joinNow: 'Join Now',
-    home: 'Home',
+    welcome: 'Welcome ',
   },
   signInSection: {
     signIn: 'Sign In',

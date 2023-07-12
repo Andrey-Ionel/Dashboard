@@ -2,7 +2,7 @@ export interface ProjectTranslationKeys {
   header: {
     signIn: string;
     joinNow: string;
-    home: string;
+    welcome: string;
   };
   signInSection: {
     signIn: string;
