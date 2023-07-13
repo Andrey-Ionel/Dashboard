@@ -17,7 +17,7 @@ import Image, {
 } from 'react-native-fast-image';
 
 import i18n from '../lib/translations';
-import { HIT_SLOP_AREA } from '../lib/constants';
+import { HIT_SLOP_AREA, logError } from '../lib/constants';
 
 import { NativeSyntheticEvent } from 'react-native/Libraries/Types/CoreEventTypes';
 import { TextInputEndEditingEventData } from 'react-native/Libraries/Components/TextInput/TextInput';
@@ -253,9 +253,7 @@ const FormTextInput: FC<FormTextInputType> = props => {
       innerButtonPress(inputValue || '');
     }
     if (props.submitForm) {
-      props.submitForm().catch(e => {
-        console.log('Error submit form', e);
-      });
+      props.submitForm().catch(e => logError(e));
     }
   };
 

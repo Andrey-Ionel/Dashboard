@@ -79,10 +79,7 @@ export const AuthProvider = ({ children }: any) => {
     if (enabled) {
       messaging()
         .getToken()
-        .then(token => {
-          console.log("'zxc', 'token'", token);
-        });
-      console.log('Authorization status:', authStatus);
+        .then(token => token);
     } else {
       logError('Failed token status');
     }
@@ -98,12 +95,9 @@ export const AuthProvider = ({ children }: any) => {
       .then(remoteMessage => remoteMessage?.notification);
 
     // It will trigger when App was open from background notification
-    messaging().onNotificationOpenedApp(async remoteMessage => {
-      console.log(
-        'Notification caused app to open from background state:',
-        remoteMessage.notification,
-      );
-    });
+    messaging().onNotificationOpenedApp(
+      async remoteMessage => remoteMessage.notification,
+    );
 
     // It's trigger notification when app foreground
     messaging().onMessage(async remoteMessage => {

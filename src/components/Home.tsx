@@ -94,7 +94,6 @@ export const Home: FC<HomeProps> = ({ navigation }) => {
     const user: FirebaseFirestoreTypes.DocumentSnapshot<FirebaseFirestoreTypes.DocumentData> =
       await firestore().collection('users').doc(userInfo?.uid).get();
     setUserName(user?.data()?.nickname);
-    console.log("'zxc', 'user'", user?.data());
   };
 
   const logoutUser = () => {
