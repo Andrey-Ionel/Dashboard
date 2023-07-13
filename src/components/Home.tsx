@@ -15,11 +15,12 @@ import {
 import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
+import { NotificationModal } from '../modals/NotificationModal';
 
 import i18n from '../lib/translations';
 import { fonts } from '../styles/fonts';
 import colors from '../styles/colors';
-import { HIT_SLOP_AREA, logError } from '../lib/constants';
+import { HIT_SLOP_AREA, isIos, logError } from '../lib/constants';
 
 export interface HomeProps {
   navigation: NavigationProp<ParamListBase>;
@@ -50,9 +51,14 @@ const styles = StyleSheet.create({
 });
 
 export const Home: FC<HomeProps> = ({ navigation }) => {
-  const { logOut, loading, userInfo } = useContext(AuthContext);
+  const { logOut, loading, userInfo, notification, setNotification } =
+    useContext(AuthContext);
   const [userName, setUserName] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
   const needOpen = false;
+  const notificationImage = isIos
+    ? notification?.ios?.badge
+    : notification?.android?.imageUrl;
 
   useEffect(() => {
     if (needOpen) {
@@ -61,10 +67,21 @@ export const Home: FC<HomeProps> = ({ navigation }) => {
     getUserData().catch(e => logError(e));
   }, []);
 
+  useEffect(() => {
+    if (notification?.title?.length) {
+      setModalVisible(true);
+    }
+  }, [notification?.title?.length]);
+
   const options = {
     mediaType: 'photo' as MediaType,
     quality: 1,
     allowsEditing: true,
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setNotification(undefined);
   };
 
   const addPhoto = async () => {
@@ -92,6 +109,15 @@ export const Home: FC<HomeProps> = ({ navigation }) => {
       screenStyle={styles.flex}
       needInSafeArea={true}
       fixedComponentTop={<Header title={'welcome'} name={userName} />}>
+      {!!modalVisible && (
+        <NotificationModal
+          title={notification?.title || ''}
+          subtitle={notification?.body || ''}
+          image={notificationImage || ''}
+          modalVisible={modalVisible}
+          closeModal={closeModal}
+        />
+      )}
       <TouchableOpacity
         onPress={logoutUser}
         style={styles.btn}

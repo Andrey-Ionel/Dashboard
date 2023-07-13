@@ -1,4 +1,10 @@
-import React, { Context, createContext, useEffect, useState } from 'react';
+import React, {
+  Context,
+  createContext,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import { Alert } from 'react-native';
 
 import auth from '@react-native-firebase/auth';
@@ -7,7 +13,9 @@ import { User } from '../components/joinNow';
 
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import firebase from '@react-native-firebase/app';
-import messaging from '@react-native-firebase/messaging';
+import messaging, {
+  FirebaseMessagingTypes,
+} from '@react-native-firebase/messaging';
 
 import {
   AsyncStorageKeys,
@@ -18,9 +26,34 @@ import {
 import { logError } from '../lib/constants';
 import i18n from 'i18next';
 
-export const AuthContext: Context<any> = createContext({});
+interface AuthContext {
+  login: (
+    email: string,
+    password: string,
+    navigation: NavigationProp<ParamListBase>,
+  ) => void;
+  createNewAccount: (
+    email: string,
+    password: string,
+    nickname: string,
+    navigation: NavigationProp<ParamListBase>,
+  ) => void;
+  logOut: (navigation: NavigationProp<ParamListBase>) => void;
+  loading: boolean;
+  userInfo: User | undefined;
+  notification: FirebaseMessagingTypes.Notification | undefined;
+  setNotification: React.Dispatch<
+    SetStateAction<FirebaseMessagingTypes.Notification | undefined>
+  >;
+}
+
+// @ts-ignore
+export const AuthContext: Context<AuthContext> = createContext({});
 export const AuthProvider = ({ children }: any) => {
-  const [userInfo, setUserInfo] = useState<User | {}>({});
+  const [userInfo, setUserInfo] = useState<User | undefined>();
+  const [notification, setNotification] = useState<
+    FirebaseMessagingTypes.Notification | undefined
+  >();
   const [loading, setLoading] = useState<boolean>(false);
   const usersCollection = firestore()?.collection('users');
 
@@ -62,30 +95,20 @@ export const AuthProvider = ({ children }: any) => {
     // Check whether an initial notification is available
     messaging()
       .getInitialNotification()
-      .then(remoteMessage => {
-        if (remoteMessage) {
-          Alert.alert(
-            'Notification caused app to open from quit state:',
-            JSON.stringify(remoteMessage.notification),
-          );
-        }
-      });
+      .then(remoteMessage => remoteMessage?.notification);
 
-    // Assume a message-notification contains a "type" property in the data payload of the screen to open
+    // It will trigger when App was open from background notification
     messaging().onNotificationOpenedApp(async remoteMessage => {
-      Alert.alert(
+      console.log(
         'Notification caused app to open from background state:',
-        JSON.stringify(remoteMessage.notification),
+        remoteMessage.notification,
       );
     });
 
-    // setAppMessaging().catch(e => logError(e));
-
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    // It's trigger notification when app foreground
+    messaging().onMessage(async remoteMessage => {
+      setNotification(remoteMessage?.notification);
     });
-
-    return unsubscribe;
   }, []);
 
   const createNewAccount = (
@@ -167,7 +190,7 @@ export const AuthProvider = ({ children }: any) => {
       .signOut()
       .then(() => {
         removeStorageValue().catch(e => logError(e));
-        setUserInfo({});
+        setUserInfo(undefined);
         navigation.navigate('SignIn');
         setLoading(false);
       })
@@ -197,7 +220,15 @@ export const AuthProvider = ({ children }: any) => {
 
   return (
     <AuthContext.Provider
-      value={{ login, createNewAccount, logOut, loading, userInfo }}>
+      value={{
+        login,
+        createNewAccount,
+        logOut,
+        loading,
+        userInfo,
+        notification,
+        setNotification,
+      }}>
       {children}
     </AuthContext.Provider>
   );
