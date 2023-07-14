@@ -1,21 +1,13 @@
-import React, {
-  Context,
-  createContext,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
+import React, { Context, createContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { User } from '../components/joinNow';
+import PushNotification from 'react-native-push-notification';
+import messaging from '@react-native-firebase/messaging';
 
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
-import firebase from '@react-native-firebase/app';
-import messaging, {
-  FirebaseMessagingTypes,
-} from '@react-native-firebase/messaging';
 
 import {
   AsyncStorageKeys,
@@ -24,6 +16,7 @@ import {
   setStorageValue,
 } from '../lib/asyncStorage';
 import { logError } from '../lib/constants';
+import { getPushData } from '../lib/helpers';
 import i18n from 'i18next';
 
 interface AuthContext {
@@ -41,34 +34,14 @@ interface AuthContext {
   logOut: (navigation: NavigationProp<ParamListBase>) => void;
   loading: boolean;
   userInfo: User | undefined;
-  notification: FirebaseMessagingTypes.Notification | undefined;
-  setNotification: React.Dispatch<
-    SetStateAction<FirebaseMessagingTypes.Notification | undefined>
-  >;
 }
 
 // @ts-ignore
 export const AuthContext: Context<AuthContext> = createContext({});
 export const AuthProvider = ({ children }: any) => {
   const [userInfo, setUserInfo] = useState<User | undefined>();
-  const [notification, setNotification] = useState<
-    FirebaseMessagingTypes.Notification | undefined
-  >();
   const [loading, setLoading] = useState<boolean>(false);
   const usersCollection = firestore()?.collection('users');
-
-  const firebaseConfig = {
-    apiKey: 'AIzaSyDgk_ZLfGXU_wCHoyqF9VHS51FEDiATdzA',
-    authDomain: 'dashboard-6ecae.firebaseapp.com',
-    projectId: 'dashboard-6ecae',
-    storageBucket: 'dashboard-6ecae.appspot.com',
-    messagingSenderId: '814351911525',
-    appId: '1:814351911525:web:6e6d1c33cb32ccf8f0548c',
-    measurementId: 'G-ZMH93WSLGY',
-  };
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig).catch(e => logError(e));
-  }
 
   const requestUserPermission = async () => {
     const authStatus = await messaging().requestPermission();
@@ -79,30 +52,26 @@ export const AuthProvider = ({ children }: any) => {
     if (enabled) {
       messaging()
         .getToken()
-        .then(token => token);
+        .then(token => console.log(token));
     } else {
       logError('Failed token status');
     }
   };
 
+  PushNotification.createChannel(
+    {
+      channelId: 'channel-id', // (required)
+      channelName: 'My channel', // (required)
+    },
+    created => created, // (optional) callback returns whether the channel was created, false means it already existed.
+  );
+
   useEffect(() => {
     isLoggedIn().catch(e => logError(e));
     requestUserPermission().catch(e => logError(e));
 
-    // Check whether an initial notification is available
-    messaging()
-      .getInitialNotification()
-      .then(remoteMessage => remoteMessage?.notification);
-
-    // It will trigger when App was open from background notification
-    messaging().onNotificationOpenedApp(
-      async remoteMessage => remoteMessage.notification,
-    );
-
     // It's trigger notification when app foreground
-    messaging().onMessage(async remoteMessage => {
-      setNotification(remoteMessage?.notification);
-    });
+    messaging().onMessage(getPushData);
   }, []);
 
   const createNewAccount = (
@@ -220,8 +189,6 @@ export const AuthProvider = ({ children }: any) => {
         logOut,
         loading,
         userInfo,
-        notification,
-        setNotification,
       }}>
       {children}
     </AuthContext.Provider>

@@ -659,14 +659,9 @@ PODS:
   - Firebase/Firestore (10.11.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 10.11.0)
-  - Firebase/InAppMessaging (10.11.0):
-    - Firebase/CoreOnly
-    - FirebaseInAppMessaging (~> 10.11.0-beta)
   - Firebase/Messaging (10.11.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 10.11.0)
-  - FirebaseABTesting (10.11.0):
-    - FirebaseCore (~> 10.0)
   - FirebaseAnalytics (10.11.0):
     - FirebaseAnalytics/AdIdSupport (= 10.11.0)
     - FirebaseCore (~> 10.0)
@@ -712,12 +707,6 @@ PODS:
     - FirebaseCore (~> 10.0)
     - "gRPC-C++ (~> 1.50.1)"
     - leveldb-library (~> 1.22)
-    - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FirebaseInAppMessaging (10.11.0-beta):
-    - FirebaseABTesting (~> 10.0)
-    - FirebaseCore (~> 10.0)
-    - FirebaseInstallations (~> 10.0)
-    - GoogleUtilities/Environment (~> 7.8)
     - nanopb (< 2.30910.0, >= 2.30908.0)
   - FirebaseInstallations (10.11.0):
     - FirebaseCore (~> 10.0)
@@ -1141,6 +1130,8 @@ PODS:
     - React-perflogger (= 0.70.10)
   - RNCAsyncStorage (1.18.2):
     - React-Core
+  - RNCPushNotificationIOS (1.11.0):
+    - React-Core
   - RNFastImage (8.6.3):
     - React-Core
     - SDWebImage (~> 5.11.1)
@@ -1159,10 +1150,6 @@ PODS:
   - RNFBFirestore (18.1.0):
     - Firebase/Firestore (= 10.11.0)
     - nanopb (< 2.30910.0, >= 2.30908.0)
-    - React-Core
-    - RNFBApp
-  - RNFBInAppMessaging (18.1.0):
-    - Firebase/InAppMessaging (= 10.11.0)
     - React-Core
     - RNFBApp
   - RNFBMessaging (18.1.0):
@@ -1218,12 +1205,12 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
-  - "RNFBInAppMessaging (from `../node_modules/@react-native-firebase/in-app-messaging`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNScreens (from `../node_modules/react-native-screens`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -1233,7 +1220,6 @@ SPEC REPOS:
     - abseil
     - BoringSSL-GRPC
     - Firebase
-    - FirebaseABTesting
     - FirebaseAnalytics
     - FirebaseAppCheckInterop
     - FirebaseAuth
@@ -1241,7 +1227,6 @@ SPEC REPOS:
     - FirebaseCoreExtension
     - FirebaseCoreInternal
     - FirebaseFirestore
-    - FirebaseInAppMessaging
     - FirebaseInstallations
     - FirebaseMessaging
     - fmt
@@ -1329,6 +1314,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNCPushNotificationIOS:
+    :path: "../node_modules/@react-native-community/push-notification-ios"
   RNFastImage:
     :path: "../node_modules/react-native-fast-image"
   RNFBAnalytics:
@@ -1339,8 +1326,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/auth"
   RNFBFirestore:
     :path: "../node_modules/@react-native-firebase/firestore"
-  RNFBInAppMessaging:
-    :path: "../node_modules/@react-native-firebase/in-app-messaging"
   RNFBMessaging:
     :path: "../node_modules/@react-native-firebase/messaging"
   RNScreens:
@@ -1357,7 +1342,6 @@ SPEC CHECKSUMS:
   FBLazyVector: 4d79ff044f28bf8ebf735074332e7a6c54e268f0
   FBReactNativeSpec: 944ea69e5efe4e94a63e0ceaf9bfdad6515aaf84
   Firebase: 31d9575c124839fb5abc0db6d39511cc1dab1b85
-  FirebaseABTesting: 3f6b711718feb87346dc05f8c964601bc8fb2cf6
   FirebaseAnalytics: 6c6bf99e8854475bf1fa342028841be8ecd236da
   FirebaseAppCheckInterop: 255b6c0292fe5da995c8b2df0c02f6a3ca7f61b4
   FirebaseAuth: 7aabcb00fbf330db49c207c0d645b8b1b62df0e9
@@ -1365,7 +1349,6 @@ SPEC CHECKSUMS:
   FirebaseCoreExtension: cacdad57fdb60e0b86dcbcac058ec78237946759
   FirebaseCoreInternal: 9e46c82a14a3b3a25be4e1e151ce6d21536b89c0
   FirebaseFirestore: 09be82b113fbcb225b9797d2c525ae8886abc7a3
-  FirebaseInAppMessaging: ecdd797d89c19713cd9da2a2570fc1c056bd23cc
   FirebaseInstallations: 2a2c6859354cbec0a228a863d4daf6de7c74ced4
   FirebaseMessaging: 06253e9669434df0a40718fc82a90c78090f4704
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
@@ -1409,12 +1392,12 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 77aa3714a353cfb1a5f5e315e8af5154cd3d9402
   ReactCommon: a29dac86d7219579db079cef8f380ebffe1ba545
   RNCAsyncStorage: ddc4ee162bfd41b0d2c68bf2d95acd81dd7f1f93
+  RNCPushNotificationIOS: 64218f3c776c03d7408284a819b2abfda1834bc8
   RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
   RNFBAnalytics: 35f22357baa84d5067abec85885f665aadd405d1
   RNFBApp: 81a9593ff681b448d1847f5d5493906310cdebe3
   RNFBAuth: c8b87ea4884da624f47be73d930f7797914dbd9c
   RNFBFirestore: 2e1bebf2b621348e1ae696309297e1f683eb1178
-  RNFBInAppMessaging: d9c7e19421e32f826755d88fe1572a4252246fe7
   RNFBMessaging: 854b0ec4b6813c1f2fc09fac52bc3bfee28f225c
   RNScreens: 68fd1060f57dd1023880bf4c05d74784b5392789
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
