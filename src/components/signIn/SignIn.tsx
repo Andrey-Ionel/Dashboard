@@ -20,6 +20,7 @@ import {
 
 import { AuthContext } from '../../context/AuthContext';
 import { Loading } from '../Loading';
+import Image from 'react-native-fast-image';
 
 import {
   commonInputProps,
@@ -32,6 +33,7 @@ import { HIT_SLOP_AREA, isIos } from '../../lib/constants';
 import { styles } from './styles';
 
 import removeIcon from '../../assets/icons/removeIcon.png';
+import phoneIcon from '../../assets/icons/phoneGreen.png';
 
 const generateFormSchema = () =>
   defineSchema({
@@ -68,6 +70,10 @@ export const SignIn: FC<SignInComponentProps> = ({ navigation }) => {
 
   const goToJoinNow = (): void => {
     navigation.navigate('JoinNow');
+  };
+
+  const goToPhoneAuth = (): void => {
+    navigation.navigate('PhoneAuth');
   };
 
   const onLoginSubmit: FormikConfig<SignInFormFields>['onSubmit'] = async (
@@ -191,22 +197,29 @@ export const SignIn: FC<SignInComponentProps> = ({ navigation }) => {
                     {i18n.t('signInSection.submit')}
                   </Text>
                 </TouchableOpacity>
-                <View style={styles.rowContainer}>
-                  <Text style={styles.haveAccountText}>
-                    {i18n.t('signInSection.dontHaveAccount')}
-                  </Text>
-                  <TouchableOpacity
-                    hitSlop={HIT_SLOP_AREA}
-                    onPress={goToJoinNow}>
-                    <Text style={styles.linkText}>
-                      {i18n.t('signInSection.joinNow')}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
               </KeyboardAvoidingView>
             );
           }}
         </Formik>
+        <View style={styles.divider} />
+        <TouchableOpacity
+          onPress={goToPhoneAuth}
+          hitSlop={HIT_SLOP_AREA}
+          style={styles.btnPhone}>
+          <Image style={styles.btnPhoneIcon} source={phoneIcon} />
+          <Text style={styles.btnText}>
+            {i18n.t('signInSection.signInWithPhone')}
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.divider} />
+      <View style={styles.rowContainer}>
+        <Text style={styles.haveAccountText}>
+          {i18n.t('signInSection.dontHaveAccount')}
+        </Text>
+        <TouchableOpacity hitSlop={HIT_SLOP_AREA} onPress={goToJoinNow}>
+          <Text style={styles.linkText}>{i18n.t('signInSection.joinNow')}</Text>
+        </TouchableOpacity>
       </View>
     </ScreenWrapper>
   );

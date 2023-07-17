@@ -46,11 +46,13 @@ export const styles = StyleSheet.create({
     marginBottom: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 300,
+    height: 50,
+    width: '100%',
     alignSelf: 'center',
   },
   btnText: {
     fontSize: 18,
+    lineHeight: 18,
     fontFamily: fonts.ghotamBlack,
     textAlign: 'center',
     color: colors.textSecondary,
@@ -127,8 +129,15 @@ export const styles = StyleSheet.create({
   },
   flex: {
     flex: 1,
+    backgroundColor: colors.backgroundSecondary,
   },
   rowContainer: {
     flexDirection: 'row',
+    margin: 20,
+  },
+  divider: {
+    height: 2,
+    width: '100%',
+    backgroundColor: colors.dividerBackground,
   },
 });

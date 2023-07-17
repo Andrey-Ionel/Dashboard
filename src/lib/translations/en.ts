@@ -5,9 +5,11 @@ export const en: ProjectTranslationKeys = {
     signIn: 'Sign In',
     joinNow: 'Join Now',
     welcome: 'Welcome ',
+    phoneAuthorisation: 'Phone Authorisation',
   },
   signInSection: {
     signIn: 'Sign In',
+    signInWithPhone: 'Sign In with phone',
     submit: 'Sign In',
     show: 'Show',
     hide: 'Hide',

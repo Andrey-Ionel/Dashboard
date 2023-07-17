@@ -274,22 +274,19 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
                     {i18n.t('signInSection.joinNow')}
                   </Text>
                 </TouchableOpacity>
-                <View style={styles.rowContainer}>
-                  <Text style={styles.haveAccountText}>
-                    {i18n.t('signInSection.haveAccount')}
-                  </Text>
-                  <TouchableOpacity
-                    hitSlop={HIT_SLOP_AREA}
-                    onPress={goToSignIn}>
-                    <Text style={styles.linkText}>
-                      {i18n.t('signInSection.signIn')}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
               </KeyboardAvoidingView>
             );
           }}
         </Formik>
+      </View>
+      <View style={styles.divider} />
+      <View style={styles.rowContainer}>
+        <Text style={styles.haveAccountText}>
+          {i18n.t('signInSection.haveAccount')}
+        </Text>
+        <TouchableOpacity hitSlop={HIT_SLOP_AREA} onPress={goToSignIn}>
+          <Text style={styles.linkText}>{i18n.t('signInSection.signIn')}</Text>
+        </TouchableOpacity>
       </View>
     </ScreenWrapper>
   );

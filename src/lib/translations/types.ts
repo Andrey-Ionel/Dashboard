@@ -3,9 +3,11 @@ export interface ProjectTranslationKeys {
     signIn: string;
     joinNow: string;
     welcome: string;
+    phoneAuthorisation: string;
   };
   signInSection: {
     signIn: string;
+    signInWithPhone: string;
     submit: string;
     show: string;
     hide: string;

@@ -10,7 +10,7 @@ interface HeaderProps {
   name?: string;
 }
 
-const styles = StyleSheet.create({
+export const headerStyles = StyleSheet.create({
   header: {
     height: 40,
     display: 'flex',
@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
 
 export const Header: FC<HeaderProps> = ({ title, name }) => {
   return (
-    <View style={styles.header}>
-      <Text style={styles.title}>
+    <View style={headerStyles.header}>
+      <Text style={headerStyles.title}>
         {i18n.t(`header.${title}`) + `${name?.length ? name : ''}`}
       </Text>
     </View>

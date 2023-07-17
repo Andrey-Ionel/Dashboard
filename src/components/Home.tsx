@@ -28,6 +28,7 @@ export interface HomeProps {
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
+    backgroundColor: colors.backgroundSecondary,
   },
   btn: {
     borderRadius: 0,
