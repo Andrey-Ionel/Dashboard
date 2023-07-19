@@ -2,8 +2,6 @@ import React, { FC, useContext, useState } from 'react';
 import {
   GestureResponderEvent,
   KeyboardAvoidingView,
-  Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -20,12 +18,14 @@ import {
   textInputProps,
 } from '../../lib/formikPresets';
 import i18n from '../../lib/translations';
-import { HIT_SLOP_AREA, isIos } from '../../lib/constants';
+import { isIos } from '../../lib/constants';
 
 import { commonInputProps, JoinNowProps, JoinNowFormFields } from './types';
 
 import removeIcon from '../../assets/icons/removeIcon.png';
 import { styles } from './styles';
+import { Button } from '../Button';
+import { Footer } from '../Footer';
 
 const generateFormSchema = () =>
   defineSchema({
@@ -265,29 +265,23 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
                   formFieldName={'confirmPassword'}
                   {...commonInputProps}
                 />
-                <TouchableOpacity
+                <Button
+                  title={i18n.t('signInSection.joinNow')}
                   onPress={onSubmit}
-                  style={styles.btn}
-                  hitSlop={HIT_SLOP_AREA}
-                  disabled={!isReadyToSubmit}>
-                  <Text style={styles.btnText}>
-                    {i18n.t('signInSection.joinNow')}
-                  </Text>
-                </TouchableOpacity>
+                  disabled={loading || !isReadyToSubmit}
+                  btnStyle={styles.btn}
+                  textStyle={styles.btnText}
+                />
               </KeyboardAvoidingView>
             );
           }}
         </Formik>
       </View>
-      <View style={styles.divider} />
-      <View style={styles.rowContainer}>
-        <Text style={styles.haveAccountText}>
-          {i18n.t('signInSection.haveAccount')}
-        </Text>
-        <TouchableOpacity hitSlop={HIT_SLOP_AREA} onPress={goToSignIn}>
-          <Text style={styles.linkText}>{i18n.t('signInSection.signIn')}</Text>
-        </TouchableOpacity>
-      </View>
+      <Footer
+        onPress={goToSignIn}
+        text={i18n.t('signInSection.haveAccount')}
+        linkText={i18n.t('signInSection.signIn')}
+      />
     </ScreenWrapper>
   );
 };

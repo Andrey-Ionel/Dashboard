@@ -67,6 +67,7 @@ export const styles = StyleSheet.create({
   btnPhoneIcon: {
     height: 50,
     width: 50,
+    resizeMode: 'contain',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -77,22 +78,6 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.ghotamBlack,
     textAlign: 'center',
     color: colors.textSecondary,
-  },
-  linkText: {
-    fontFamily: fonts.gotham,
-    color: colors.link,
-    fontSize: 14,
-    lineHeight: 22,
-    fontWeight: '500',
-    letterSpacing: 0.5,
-  },
-  haveAccountText: {
-    fontFamily: fonts.gotham,
-    color: colors.textPrimary,
-    fontSize: 14,
-    lineHeight: 22,
-    fontWeight: '500',
-    letterSpacing: 0.5,
   },
   iconWrapperStyle: {
     width: 30,
@@ -151,10 +136,6 @@ export const styles = StyleSheet.create({
   flex: {
     flex: 1,
     backgroundColor: colors.backgroundSecondary,
-  },
-  rowContainer: {
-    margin: 20,
-    flexDirection: 'row',
   },
   divider: {
     height: 2,

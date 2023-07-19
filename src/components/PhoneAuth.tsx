@@ -5,7 +5,6 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -23,13 +22,14 @@ import {
   textInputProps,
 } from '../lib/formikPresets';
 import i18n from '../lib/translations';
-import { HIT_SLOP_AREA, isIos, logError, ONLY_NUMBERS } from '../lib/constants';
+import { isIos, logError, ONLY_NUMBERS } from '../lib/constants';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
 import { fonts } from '../styles/fonts';
 import colors from '../styles/colors';
 import Image from 'react-native-fast-image';
 import warning from '../assets/icons/warning.png';
+import { Button } from './Button';
 
 const height = Dimensions.get('screen').height;
 
@@ -361,17 +361,17 @@ export const PhoneAuth: FC<PhoneAuthProps> = ({ navigation }) => {
                         placeholder={i18n.t('signInSection.otpPlaceholder')}
                       />
                     )}
-                    <TouchableOpacity
-                      onPress={onSubmit}
-                      style={styles.btn}
-                      hitSlop={HIT_SLOP_AREA}
-                      disabled={!isReadyToSubmit}>
-                      <Text style={styles.btnText}>
-                        {confirm?.verificationId?.length
+                    <Button
+                      title={
+                        confirm?.verificationId?.length
                           ? i18n.t('signInSection.confirmCode')
-                          : i18n.t('signInSection.signIn')}
-                      </Text>
-                    </TouchableOpacity>
+                          : i18n.t('signInSection.signIn')
+                      }
+                      onPress={onSubmit}
+                      disabled={loading || !isReadyToSubmit}
+                      btnStyle={styles.btn}
+                      textStyle={styles.btnText}
+                    />
                   </KeyboardAvoidingView>
                 )}
               </>

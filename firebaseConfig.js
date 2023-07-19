@@ -1,5 +1,11 @@
 import firebase from '@react-native-firebase/app';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { logError } from './src/lib/constants';
+
+GoogleSignin.configure({
+  webClientId:
+    '814351911525-giqdiclqbjj8pvah63aeogi9jqgt3akv.apps.googleusercontent.com',
+});
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDgk_ZLfGXU_wCHoyqF9VHS51FEDiATdzA',

@@ -57,22 +57,6 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.textSecondary,
   },
-  linkText: {
-    fontFamily: fonts.gotham,
-    color: colors.link,
-    fontSize: 14,
-    lineHeight: 22,
-    fontWeight: '500',
-    letterSpacing: 0.5,
-  },
-  haveAccountText: {
-    fontFamily: fonts.gotham,
-    color: colors.textPrimary,
-    fontSize: 14,
-    lineHeight: 22,
-    fontWeight: '500',
-    letterSpacing: 0.5,
-  },
   iconWrapperStyle: {
     width: 30,
     height: 30,
@@ -130,10 +114,6 @@ export const styles = StyleSheet.create({
   flex: {
     flex: 1,
     backgroundColor: colors.backgroundSecondary,
-  },
-  rowContainer: {
-    flexDirection: 'row',
-    margin: 20,
   },
   divider: {
     height: 2,

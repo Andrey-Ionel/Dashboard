@@ -2,8 +2,6 @@ import React, { FC, useContext, useState } from 'react';
 import {
   GestureResponderEvent,
   KeyboardAvoidingView,
-  Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -11,6 +9,7 @@ import { Formik, FormikConfig, FormikProps } from 'formik';
 import FormTextInput from '../TextInput';
 import { ScreenWrapper } from '../ScreenWrapper';
 import { Header } from '../Header';
+import { Button } from '../Button';
 
 import {
   defineSchema,
@@ -20,7 +19,6 @@ import {
 
 import { AuthContext } from '../../context/AuthContext';
 import { Loading } from '../Loading';
-import Image from 'react-native-fast-image';
 
 import {
   commonInputProps,
@@ -29,11 +27,12 @@ import {
 } from './types';
 
 import i18n from '../../lib/translations';
-import { HIT_SLOP_AREA, isIos } from '../../lib/constants';
+import { isIos } from '../../lib/constants';
 import { styles } from './styles';
 
 import removeIcon from '../../assets/icons/removeIcon.png';
 import phoneIcon from '../../assets/icons/phoneGreen.png';
+import { Footer } from '../Footer';
 
 const generateFormSchema = () =>
   defineSchema({
@@ -188,39 +187,32 @@ export const SignIn: FC<SignInComponentProps> = ({ navigation }) => {
                   {...commonInputProps}
                 />
                 <View style={styles.friendlyUAContainer} />
-                <TouchableOpacity
+                <Button
+                  title={i18n.t('signInSection.submit')}
                   onPress={onSubmit}
-                  hitSlop={HIT_SLOP_AREA}
-                  style={styles.btn}
-                  disabled={loading || !isReadyToSubmit}>
-                  <Text style={styles.btnText}>
-                    {i18n.t('signInSection.submit')}
-                  </Text>
-                </TouchableOpacity>
+                  disabled={loading || !isReadyToSubmit}
+                  btnStyle={styles.btn}
+                  textStyle={styles.btnText}
+                />
               </KeyboardAvoidingView>
             );
           }}
         </Formik>
         <View style={styles.divider} />
-        <TouchableOpacity
+        <Button
+          title={i18n.t('signInSection.signInWithPhone')}
           onPress={goToPhoneAuth}
-          hitSlop={HIT_SLOP_AREA}
-          style={styles.btnPhone}>
-          <Image style={styles.btnPhoneIcon} source={phoneIcon} />
-          <Text style={styles.btnText}>
-            {i18n.t('signInSection.signInWithPhone')}
-          </Text>
-        </TouchableOpacity>
+          icon={phoneIcon}
+          btnStyle={styles.btnPhone}
+          textStyle={styles.btnText}
+          imageStyle={styles.btnPhoneIcon}
+        />
       </View>
-      <View style={styles.divider} />
-      <View style={styles.rowContainer}>
-        <Text style={styles.haveAccountText}>
-          {i18n.t('signInSection.dontHaveAccount')}
-        </Text>
-        <TouchableOpacity hitSlop={HIT_SLOP_AREA} onPress={goToJoinNow}>
-          <Text style={styles.linkText}>{i18n.t('signInSection.joinNow')}</Text>
-        </TouchableOpacity>
-      </View>
+      <Footer
+        onPress={goToJoinNow}
+        text={i18n.t('signInSection.dontHaveAccount')}
+        linkText={i18n.t('signInSection.joinNow')}
+      />
     </ScreenWrapper>
   );
 };
