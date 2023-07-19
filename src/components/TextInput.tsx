@@ -80,15 +80,6 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors.textError,
   },
-  placeholder: {
-    position: 'absolute',
-    top: 18,
-    left: 20,
-    fontWeight: '500',
-    fontSize: 17,
-    fontFamily: fonts.gotham,
-    color: colors.textPopover,
-  },
   activeInput: {
     borderWidth: 2,
   },
@@ -181,7 +172,6 @@ const FormTextInput: FC<FormTextInputType> = props => {
     requiredSymbolErrorStyles,
     iconUrl,
     placeholder,
-    placeholderStyles,
     textInputContainerStyles,
     textInputStyles,
     textInputErrorStyles,
@@ -287,7 +277,6 @@ const FormTextInput: FC<FormTextInputType> = props => {
     [props, setFormikField, formFieldName],
   );
 
-  const isValueEmpty = value?.length === 0;
   const keyboardTypeValue = keyboardType || (TEXT_VARIABLES.default as any);
   const returnKeyType = keyboardReturnKeyType ?? 'default';
   const isPasswordInput = formFieldName.toLowerCase().includes('password');
@@ -336,18 +325,13 @@ const FormTextInput: FC<FormTextInputType> = props => {
           value={value}
           maxLength={maxLength}
           onEndEditing={handleEndEditing}
-          placeholder={''}
+          placeholder={placeholder}
           autoCapitalize={'none'}
           {...(props as TextInputPropsOmit)}
           onBlur={handleBlur}
           onChangeText={handleChange}
           onFocus={handleFocus}
         />
-        {isValueEmpty && (
-          <Text style={[styles.placeholder, placeholderStyles]}>
-            {placeholder}
-          </Text>
-        )}
         {!!iconUrl && (
           <TouchableOpacity
             hitSlop={HIT_SLOP_AREA}

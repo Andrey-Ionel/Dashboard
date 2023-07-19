@@ -8,6 +8,8 @@ export interface ProjectTranslationKeys {
   signInSection: {
     signIn: string;
     signInWithPhone: string;
+    confirmCode: string;
+    otpPlaceholder: string;
     submit: string;
     show: string;
     hide: string;
@@ -48,11 +50,18 @@ export interface ProjectTranslationKeys {
     emailInvalid: string;
     noSuchEmail: string;
     wrongPassword: string;
+    otpRequest: string;
+    invalidOTP: string;
+    otp: string;
   };
   inputTitles: {
     required: string;
     email: string;
     emailAddress: string;
+    password: string;
+    confirmPassword: string;
+    nickname: string;
+    otp: string;
     phoneNumber: string;
     zip: string;
     state: string;

@@ -69,8 +69,9 @@ export const Home: FC<HomeProps> = ({ navigation }) => {
   };
 
   const addPhoto = async () => {
-    let result: ImagePickerResponse;
-    result = await launchImageLibrary(options as ImageLibraryOptions);
+    const result: ImagePickerResponse = await launchImageLibrary(
+      options as ImageLibraryOptions,
+    );
     console.log("'zxc', 'result'", result);
   };
 

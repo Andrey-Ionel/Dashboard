@@ -13,3 +13,5 @@ export const HIT_SLOP_AREA = {
   bottom: 10,
   left: 10,
 };
+
+export const ONLY_NUMBERS = /\D/g;

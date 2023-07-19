@@ -142,7 +142,7 @@ export const SignIn: FC<SignInComponentProps> = ({ navigation }) => {
                   textInputStyles={[styles.input, styles.borderRect]}
                   errorsMessage={errors.email || ''}
                   required={true}
-                  title={'Email Address'}
+                  title={i18n.t('inputTitles.emailAddress')}
                   formFieldName={'email'}
                   setFormikField={handleEmailChange}
                   value={values.email}
@@ -167,7 +167,7 @@ export const SignIn: FC<SignInComponentProps> = ({ navigation }) => {
                     isPasswordValue && styles.iconWithButton,
                   ]}
                   imageStyles={styles.iconStyles}
-                  title={'Password'}
+                  title={i18n.t('inputTitles.password')}
                   onFocus={onFocusPassword}
                   onBlur={onBlurPassword(values.password)}
                   iconPress={onPressIconPassword(setFieldValue)}

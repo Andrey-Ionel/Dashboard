@@ -35,6 +35,7 @@ export const regexSchemaPresets = () => {
         item => !!item?.match(/(?=.*\d+)(?=.*[A-Za-z$@.!%*#?&]).{7,}/),
       )
       .oneOf([yup.ref('password')], 'Passwords do not match'),
+    otp: () => yup.string().matches(/^[0-9.,]+$/, i18n.t('errors.otp')),
     phone: yup
       .string()
       .matches(/^[+]?[0-9]{1}[0-9 ]{3,20}$/, i18n.t('errors.phone')),
@@ -151,6 +152,7 @@ export const regexSchemaPresets = () => {
 export type FormFieldType =
   | 'phone'
   | 'nickname'
+  | 'otp'
   | 'firstName'
   | 'lastName'
   | 'address1'
@@ -171,7 +173,12 @@ export const textInputProps: Record<
 > = {
   nickname: {
     keyboardType: isIos ? 'name-phone-pad' : 'default',
-    textContentType: 'givenName',
+    textContentType: 'nickname',
+    returnKeyType: 'done',
+  },
+  otp: {
+    keyboardType: 'numeric',
+    textContentType: 'oneTimeCode',
     returnKeyType: 'done',
   },
   firstName: {

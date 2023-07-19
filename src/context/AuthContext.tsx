@@ -1,7 +1,13 @@
-import React, { Context, createContext, useEffect, useState } from 'react';
+import React, {
+  Context,
+  createContext,
+  Dispatch,
+  useEffect,
+  useState,
+} from 'react';
 import { Alert } from 'react-native';
 
-import auth from '@react-native-firebase/auth';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { User } from '../components/joinNow';
 import PushNotification from 'react-native-push-notification';
@@ -34,6 +40,17 @@ interface AuthContext {
   logOut: (navigation: NavigationProp<ParamListBase>) => void;
   loading: boolean;
   userInfo: User | undefined;
+  requestOTP: (phoneNumber: string) => Promise<void>;
+  loginByPhone: (
+    nickname: string,
+    phone: string,
+    navigation: NavigationProp<ParamListBase>,
+  ) => Promise<void>;
+  setCode: Dispatch<React.SetStateAction<string>>;
+  confirm: FirebaseAuthTypes.ConfirmationResult | null;
+  setConfirm: React.Dispatch<
+    React.SetStateAction<FirebaseAuthTypes.ConfirmationResult | null>
+  >;
 }
 
 // @ts-ignore
@@ -41,6 +58,10 @@ export const AuthContext: Context<AuthContext> = createContext({});
 export const AuthProvider = ({ children }: any) => {
   const [userInfo, setUserInfo] = useState<User | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [confirm, setConfirm] =
+    useState<FirebaseAuthTypes.ConfirmationResult | null>(null);
+  const [code, setCode] = useState('');
+
   const usersCollection = firestore()?.collection('users');
 
   const requestUserPermission = async () => {
@@ -60,10 +81,10 @@ export const AuthProvider = ({ children }: any) => {
 
   PushNotification.createChannel(
     {
-      channelId: 'channel-id', // (required)
-      channelName: 'My channel', // (required)
+      channelId: 'channel-id',
+      channelName: 'My channel',
     },
-    created => created, // (optional) callback returns whether the channel was created, false means it already existed.
+    created => created,
   );
 
   useEffect(() => {
@@ -73,6 +94,63 @@ export const AuthProvider = ({ children }: any) => {
     // It's trigger notification when app foreground
     messaging().onMessage(getPushData);
   }, []);
+
+  const requestOTP = async (phoneNumber: string) => {
+    setLoading(true);
+    await auth()
+      .signInWithPhoneNumber(phoneNumber)
+      .then(confirmation => {
+        setConfirm(confirmation);
+        setLoading(false);
+      })
+      .catch(error => {
+        if (error?.code === 'auth/too-many-requests') {
+          setLoading(false);
+          Alert.alert(i18n.t('errors.otpRequest'));
+        }
+        logError(error);
+        setLoading(false);
+      });
+  };
+
+  const loginByPhone = async (
+    nickname: string,
+    phone: string,
+    navigation: NavigationProp<ParamListBase>,
+  ) => {
+    setLoading(true);
+    try {
+      await confirm?.confirm(code).then(data => {
+        usersCollection
+          .doc(data?.user?.uid)
+          .set({
+            phone: phone,
+            id: data?.user?.uid,
+            nickname: nickname,
+          })
+          .then(() => {
+            navigation.navigate('Home');
+          });
+        setUserInfo(data?.user);
+        setStorageValue(AsyncStorageKeys.credentials, data?.user).catch(e =>
+          logError(e),
+        );
+        setConfirm(null);
+        setLoading(false);
+      });
+    } catch (error: any) {
+      if (error?.code === 'auth/invalid-verification-code') {
+        setLoading(false);
+        Alert.alert(i18n.t('errors.invalidOTP'));
+      }
+      if (error?.code === 'auth/missing-verification-code') {
+        setLoading(false);
+        Alert.alert(i18n.t('errors.invalidOTP'));
+      }
+      logError(error);
+      setLoading(false);
+    }
+  };
 
   const createNewAccount = (
     email: string,
@@ -189,6 +267,11 @@ export const AuthProvider = ({ children }: any) => {
         logOut,
         loading,
         userInfo,
+        requestOTP,
+        loginByPhone,
+        setCode,
+        confirm,
+        setConfirm,
       }}>
       {children}
     </AuthContext.Provider>
