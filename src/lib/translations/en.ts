@@ -10,6 +10,7 @@ export const en: ProjectTranslationKeys = {
   signInSection: {
     signIn: 'Sign In',
     signInWithPhone: 'Sign In with phone',
+    signInWithGoogle: 'Sign In with Google',
     confirmCode: 'Confirm Code',
     otpPlaceholder: 'Please, enter SMS code',
     submit: 'Sign In',

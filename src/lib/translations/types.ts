@@ -8,6 +8,7 @@ export interface ProjectTranslationKeys {
   signInSection: {
     signIn: string;
     signInWithPhone: string;
+    signInWithGoogle: string;
     confirmCode: string;
     otpPlaceholder: string;
     submit: string;

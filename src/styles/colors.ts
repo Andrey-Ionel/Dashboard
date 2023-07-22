@@ -5,6 +5,7 @@ export interface Theme {
   backgroundSecondary: string;
   dividerBackground: string;
   greenBackground: string;
+  googleBackground: string;
 
   // Separator
   separatorPrimary: string;
@@ -24,6 +25,7 @@ export const lightMode: Theme = {
   backgroundSecondary: '#fff',
   dividerBackground: '#EBEBEB',
   greenBackground: '#367c55',
+  googleBackground: '#5186ec',
 
   // Separator
   separatorPrimary: '#999999',

@@ -205,7 +205,7 @@ const generateFormSchema = () =>
       .required(i18n.t('errors.nickname')),
   });
 
-export const PhoneAuth: FC<PhoneAuthProps> = ({ navigation }) => {
+export const PhoneAuth: FC<PhoneAuthProps> = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [phoneError, setPhoneError] = useState<boolean>(false);
   const { loading, requestOTP, loginByPhone, setCode, confirm, setConfirm } =
@@ -224,9 +224,7 @@ export const PhoneAuth: FC<PhoneAuthProps> = ({ navigation }) => {
       return;
     }
     confirm?.verificationId?.length
-      ? loginByPhone(values.nickname, phoneNumber, navigation).catch(e =>
-          logError(e),
-        )
+      ? loginByPhone(values.nickname, phoneNumber).catch(e => logError(e))
       : requestOTP(phoneNumber).catch(e => logError(e));
   };
 

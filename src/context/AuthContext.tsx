@@ -12,8 +12,7 @@ import firestore from '@react-native-firebase/firestore';
 import { User } from '../components/joinNow';
 import PushNotification from 'react-native-push-notification';
 import messaging from '@react-native-firebase/messaging';
-
-import { NavigationProp, ParamListBase } from '@react-navigation/native';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 import {
   AsyncStorageKeys,
@@ -26,31 +25,19 @@ import { getPushData } from '../lib/helpers';
 import i18n from 'i18next';
 
 interface AuthContext {
-  login: (
-    email: string,
-    password: string,
-    navigation: NavigationProp<ParamListBase>,
-  ) => void;
-  createNewAccount: (
-    email: string,
-    password: string,
-    nickname: string,
-    navigation: NavigationProp<ParamListBase>,
-  ) => void;
-  logOut: (navigation: NavigationProp<ParamListBase>) => void;
+  login: (email: string, password: string) => void;
+  createNewAccount: (email: string, password: string, nickname: string) => void;
+  logOut: () => void;
   loading: boolean;
   userInfo: User | undefined;
   requestOTP: (phoneNumber: string) => Promise<void>;
-  loginByPhone: (
-    nickname: string,
-    phone: string,
-    navigation: NavigationProp<ParamListBase>,
-  ) => Promise<void>;
+  loginByPhone: (nickname: string, phone: string) => Promise<void>;
   setCode: Dispatch<React.SetStateAction<string>>;
   confirm: FirebaseAuthTypes.ConfirmationResult | null;
   setConfirm: React.Dispatch<
     React.SetStateAction<FirebaseAuthTypes.ConfirmationResult | null>
   >;
+  loginWithGoogle: () => Promise<FirebaseAuthTypes.UserCredential | null>;
 }
 
 // @ts-ignore
@@ -61,6 +48,7 @@ export const AuthProvider = ({ children }: any) => {
   const [confirm, setConfirm] =
     useState<FirebaseAuthTypes.ConfirmationResult | null>(null);
   const [code, setCode] = useState('');
+  const [isGoogle, setIsGoogle] = useState(false);
 
   const usersCollection = firestore()?.collection('users');
 
@@ -87,13 +75,71 @@ export const AuthProvider = ({ children }: any) => {
     created => created,
   );
 
+  const onAuthStateChanged = (user: User) => {
+    if (user?.uid?.length && isGoogle) {
+      setUserInfo(user);
+      setStorageValue(AsyncStorageKeys.credentials, user).catch(e =>
+        logError(e),
+      );
+      setIsGoogle(false);
+      setLoading(false);
+      usersCollection?.doc(user?.uid)?.set({
+        email: user?.email,
+        id: user?.uid,
+        nickname: user?.displayName,
+      });
+    }
+  };
+
   useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '814351911525-pe1ggvj0iojgiasrr0airh9ilhhc4gu5.apps.googleusercontent.com',
+    });
+
     isLoggedIn().catch(e => logError(e));
     requestUserPermission().catch(e => logError(e));
 
     // It's trigger notification when app foreground
     messaging().onMessage(getPushData);
   }, []);
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged as any);
+    return () => {
+      subscriber();
+    };
+  }, [onAuthStateChanged]);
+
+  const loginWithGoogle = async () => {
+    try {
+      setLoading(true);
+      setIsGoogle(true);
+      await GoogleSignin.hasPlayServices({
+        showPlayServicesUpdateDialog: true,
+      });
+      const googleCredential = await GoogleSignin.signIn()
+        .then(user => {
+          return auth.GoogleAuthProvider.credential(user?.idToken);
+        })
+        .catch(e => {
+          logError(e);
+          setLoading(false);
+          setIsGoogle(false);
+        });
+      if (googleCredential) {
+        return auth().signInWithCredential(googleCredential);
+      }
+      setLoading(false);
+      setIsGoogle(false);
+      return null;
+    } catch (e: any) {
+      logError(e?.message);
+      setLoading(false);
+      setIsGoogle(false);
+      return null;
+    }
+  };
 
   const requestOTP = async (phoneNumber: string) => {
     setLoading(true);
@@ -113,24 +159,15 @@ export const AuthProvider = ({ children }: any) => {
       });
   };
 
-  const loginByPhone = async (
-    nickname: string,
-    phone: string,
-    navigation: NavigationProp<ParamListBase>,
-  ) => {
+  const loginByPhone = async (nickname: string, phone: string) => {
     setLoading(true);
     try {
       await confirm?.confirm(code).then(data => {
-        usersCollection
-          .doc(data?.user?.uid)
-          .set({
-            phone: phone,
-            id: data?.user?.uid,
-            nickname: nickname,
-          })
-          .then(() => {
-            navigation.navigate('Home');
-          });
+        usersCollection.doc(data?.user?.uid).set({
+          id: data?.user?.uid,
+          nickname: nickname?.length ? nickname : '',
+          phone: phone?.length ? phone : '',
+        });
         setUserInfo(data?.user);
         setStorageValue(AsyncStorageKeys.credentials, data?.user).catch(e =>
           logError(e),
@@ -156,22 +193,16 @@ export const AuthProvider = ({ children }: any) => {
     email: string,
     password: string,
     nickname: string,
-    navigation: NavigationProp<ParamListBase>,
   ): void => {
     setLoading(true);
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(data => {
-        usersCollection
-          .doc(data?.user?.uid)
-          .set({
-            email: email,
-            id: data?.user?.uid,
-            nickname: nickname,
-          })
-          .then(() => {
-            navigation.navigate('Home');
-          });
+        usersCollection.doc(data?.user?.uid).set({
+          email: email,
+          id: data?.user?.uid,
+          nickname: nickname,
+        });
         setUserInfo(data?.user);
         setStorageValue(AsyncStorageKeys.credentials, data?.user).catch(e =>
           logError(e),
@@ -192,11 +223,7 @@ export const AuthProvider = ({ children }: any) => {
       });
   };
 
-  const login = (
-    email: string,
-    password: string,
-    navigation: NavigationProp<ParamListBase>,
-  ): void => {
+  const login = (email: string, password: string): void => {
     setLoading(true);
     auth()
       .signInWithEmailAndPassword(email, password)
@@ -205,7 +232,6 @@ export const AuthProvider = ({ children }: any) => {
         setStorageValue(AsyncStorageKeys.credentials, data?.user).catch(e =>
           logError(e),
         );
-        navigation.navigate('Home');
         setLoading(false);
       })
       .catch(error => {
@@ -225,14 +251,13 @@ export const AuthProvider = ({ children }: any) => {
       });
   };
 
-  const logOut = (navigation: NavigationProp<ParamListBase>): void => {
+  const logOut = (): void => {
     setLoading(true);
     auth()
       .signOut()
       .then(() => {
         removeStorageValue().catch(e => logError(e));
         setUserInfo(undefined);
-        navigation.navigate('SignIn');
         setLoading(false);
       })
       .catch(error => {
@@ -272,6 +297,7 @@ export const AuthProvider = ({ children }: any) => {
         setCode,
         confirm,
         setConfirm,
+        loginWithGoogle,
       }}>
       {children}
     </AuthContext.Provider>

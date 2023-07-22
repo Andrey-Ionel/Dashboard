@@ -10,15 +10,15 @@ import FormTextInput from '../TextInput';
 import { ScreenWrapper } from '../ScreenWrapper';
 import { Header } from '../Header';
 import { Button } from '../Button';
+import { Footer } from '../Footer';
+import { Loading } from '../Loading';
+import { AuthContext } from '../../context/AuthContext';
 
 import {
   defineSchema,
   regexSchemaPresets,
   textInputProps,
 } from '../../lib/formikPresets';
-
-import { AuthContext } from '../../context/AuthContext';
-import { Loading } from '../Loading';
 
 import {
   commonInputProps,
@@ -32,7 +32,7 @@ import { styles } from './styles';
 
 import removeIcon from '../../assets/icons/removeIcon.png';
 import phoneIcon from '../../assets/icons/phoneGreen.png';
-import { Footer } from '../Footer';
+import googleIcon from '../../assets/icons/googleIcon.png';
 
 const generateFormSchema = () =>
   defineSchema({
@@ -43,7 +43,7 @@ const generateFormSchema = () =>
   });
 
 export const SignIn: FC<SignInComponentProps> = ({ navigation }) => {
-  const { login, loading } = useContext(AuthContext);
+  const { login, loading, loginWithGoogle } = useContext(AuthContext);
   const [showRemove, setShowRemove] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -78,7 +78,7 @@ export const SignIn: FC<SignInComponentProps> = ({ navigation }) => {
   const onLoginSubmit: FormikConfig<SignInFormFields>['onSubmit'] = async (
     values: SignInFormFields,
   ) => {
-    login(values?.email, values?.password, navigation);
+    login(values?.email, values?.password);
   };
 
   const formikConfig: FormikConfig<SignInFormFields> = {
@@ -206,6 +206,14 @@ export const SignIn: FC<SignInComponentProps> = ({ navigation }) => {
           btnStyle={styles.btnPhone}
           textStyle={styles.btnText}
           imageStyle={styles.btnPhoneIcon}
+        />
+        <Button
+          title={i18n.t('signInSection.signInWithGoogle')}
+          onPress={loginWithGoogle}
+          icon={googleIcon}
+          btnStyle={styles.btnGoogle}
+          textStyle={styles.btnText}
+          imageStyle={styles.btnGoogleIcon}
         />
       </View>
       <Footer

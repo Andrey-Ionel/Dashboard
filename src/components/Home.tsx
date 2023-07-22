@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Home: FC<HomeProps> = ({ navigation }) => {
+export const Home: FC<HomeProps> = () => {
   const { logOut, loading, userInfo } = useContext(AuthContext);
   const [userName, setUserName] = useState('');
   const needOpen = false;
@@ -59,8 +59,16 @@ export const Home: FC<HomeProps> = ({ navigation }) => {
     if (needOpen) {
       addPhoto().catch(e => logError(e));
     }
-    getUserData().catch(e => logError(e));
   }, []);
+
+  useEffect(() => {
+    const getUserData = async () => {
+      const user: FirebaseFirestoreTypes.DocumentSnapshot<FirebaseFirestoreTypes.DocumentData> =
+        await firestore()?.collection('users')?.doc(userInfo?.uid)?.get();
+      setUserName(user?.data()?.nickname);
+    };
+    getUserData().catch(e => logError(e));
+  }, [userInfo?.uid, userName]);
 
   const options = {
     mediaType: 'photo' as MediaType,
@@ -75,14 +83,8 @@ export const Home: FC<HomeProps> = ({ navigation }) => {
     console.log("'zxc', 'result'", result);
   };
 
-  const getUserData = async () => {
-    const user: FirebaseFirestoreTypes.DocumentSnapshot<FirebaseFirestoreTypes.DocumentData> =
-      await firestore().collection('users').doc(userInfo?.uid).get();
-    setUserName(user?.data()?.nickname);
-  };
-
   const logoutUser = () => {
-    logOut?.(navigation);
+    logOut?.();
   };
 
   if (loading) {

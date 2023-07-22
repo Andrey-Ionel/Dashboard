@@ -84,12 +84,7 @@ export const JoinNow: FC<JoinNowProps> = ({ navigation }) => {
   const onLoginSubmit: FormikConfig<JoinNowFormFields>['onSubmit'] = async (
     values: JoinNowFormFields,
   ) => {
-    createNewAccount(
-      values?.email,
-      values?.password,
-      values?.nickname,
-      navigation,
-    );
+    createNewAccount(values?.email, values?.password, values?.nickname);
   };
 
   const formikConfig: FormikConfig<JoinNowFormFields> = {
