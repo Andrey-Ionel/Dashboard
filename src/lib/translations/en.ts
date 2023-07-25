@@ -6,6 +6,7 @@ export const en: ProjectTranslationKeys = {
     joinNow: 'Join Now',
     welcome: 'Welcome ',
     phoneAuthorisation: 'Phone Login',
+    chat: 'Chat',
   },
   signInSection: {
     signIn: 'Sign In',

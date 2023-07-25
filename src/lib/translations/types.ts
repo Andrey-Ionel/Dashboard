@@ -4,6 +4,7 @@ export interface ProjectTranslationKeys {
     joinNow: string;
     welcome: string;
     phoneAuthorisation: string;
+    chat: string;
   };
   signInSection: {
     signIn: string;
