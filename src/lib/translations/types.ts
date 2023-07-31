@@ -6,6 +6,14 @@ export interface ProjectTranslationKeys {
     phoneAuthorisation: string;
     chat: string;
   };
+  deleteModal: {
+    title: string;
+    subtitle: string;
+  };
+  accessibility: {
+    pleaseEnter: string;
+    pleaseEnterMessage: string;
+  };
   signInSection: {
     signIn: string;
     signInWithPhone: string;

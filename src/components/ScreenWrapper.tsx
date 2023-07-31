@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   KeyboardAvoidingViewProps,
   SafeAreaView,
+  ScrollView,
   ScrollViewProps,
   StyleProp,
   StyleSheet,
@@ -33,13 +34,17 @@ const styles = StyleSheet.create({
   },
 });
 
+interface scrollView extends ScrollViewProps {
+  ref: React.RefObject<ScrollView>;
+}
+
 export interface ScreenWrapperProps {
   style?: StyleProp<ViewStyle>;
   screenStyle?: StyleProp<ViewStyle>;
   needInSafeArea?: boolean;
 
   scroll?: boolean;
-  scrollViewProps?: ScrollViewProps;
+  scrollViewProps?: scrollView;
 
   keyboardAvoidingViewProps?: KeyboardAvoidingViewProps;
   hideWebHeader?: boolean;

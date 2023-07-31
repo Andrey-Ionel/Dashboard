@@ -8,6 +8,14 @@ export const en: ProjectTranslationKeys = {
     phoneAuthorisation: 'Phone Login',
     chat: 'Chat',
   },
+  deleteModal: {
+    title: 'Delete Message',
+    subtitle: 'Are you sure you want to delete this message?',
+  },
+  accessibility: {
+    pleaseEnter: 'Please enter',
+    pleaseEnterMessage: 'Please enter message',
+  },
   signInSection: {
     signIn: 'Sign In',
     signInWithPhone: 'Sign In with phone',

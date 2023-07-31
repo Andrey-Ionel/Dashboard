@@ -7,9 +7,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Button } from '../components/Button';
 
 import { fonts } from '../styles/fonts';
-import Image from 'react-native-fast-image';
+import colors from '../styles/colors';
 
 const modalStyles = StyleSheet.create({
   modalWrapper: {
@@ -19,15 +20,15 @@ const modalStyles = StyleSheet.create({
     marginTop: 22,
   },
   titleContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
   },
   modalView: {
-    margin: 20,
+    margin: 30,
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 35,
+    padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
@@ -63,28 +64,54 @@ const modalStyles = StyleSheet.create({
     width: 30,
     resizeMode: 'contain',
   },
+  btnWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  btn: {
+    flex: 1,
+    borderRadius: 0,
+    backgroundColor: 'transparent',
+    padding: 15,
+    marginBottom: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 55,
+  },
+  btnText: {
+    fontSize: 18,
+    lineHeight: 18,
+    fontFamily: fonts.ghotamBlack,
+    textAlign: 'center',
+    color: colors.textPrimary,
+  },
 });
 
 interface NotificationModalProps {
   title: string;
   subtitle: string;
-  image: string;
   modalVisible: boolean;
   closeModal: () => void;
+  onDelete: () => Promise<void>;
 }
 
-export const NotificationModal: FC<NotificationModalProps> = ({
+export const ConfirmModal: FC<NotificationModalProps> = ({
   title,
   subtitle,
-  image,
   modalVisible,
   closeModal,
+  onDelete,
 }) => {
   if (!title?.length) {
     return null;
   }
 
   const closePress = () => {
+    closeModal?.();
+  };
+
+  const deletePress = () => {
+    onDelete?.();
     closeModal?.();
   };
 
@@ -102,10 +129,23 @@ export const NotificationModal: FC<NotificationModalProps> = ({
           <TouchableOpacity onPress={closePress}>
             <View style={modalStyles.titleContainer}>
               <Text style={modalStyles.title}>{title}</Text>
-              <Image style={modalStyles.image} source={{ uri: image }} />
             </View>
             <Text style={modalStyles.subtitle}>{subtitle}</Text>
           </TouchableOpacity>
+          <View style={modalStyles.btnWrapper}>
+            <Button
+              title={'Ok'}
+              onPress={deletePress}
+              btnStyle={modalStyles.btn}
+              textStyle={modalStyles.btnText}
+            />
+            <Button
+              title={'Cancel'}
+              onPress={closePress}
+              btnStyle={modalStyles.btn}
+              textStyle={modalStyles.btnText}
+            />
+          </View>
         </View>
       </TouchableOpacity>
     </Modal>

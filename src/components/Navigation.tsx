@@ -29,15 +29,7 @@ export const Navigation = () => {
             <Stack.Screen
               name="Chat"
               component={Chat}
-              options={{
-                title: i18n.t('header.chat'),
-                headerTitleStyle: headerStyles.title,
-                headerTintColor: colors.textPrimary,
-                headerShadowVisible: false,
-                statusBarColor: colors.textPrimary,
-                orientation: 'portrait',
-                headerTitleAlign: 'center',
-              }}
+              options={{ headerShown: false, orientation: 'portrait' }}
             />
           </>
         ) : (

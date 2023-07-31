@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 
 import { HIT_SLOP_AREA } from '../lib/constants';
+import colors from '../styles/colors';
+
 interface ButtonProps {
   title: string;
   onPress: (event: GestureResponderEvent) => void;
@@ -35,7 +37,9 @@ export const Button: FC<ButtonProps> = ({
       disabled={disabled}
       style={btnStyle}>
       {!!icon && <Image style={imageStyle} source={icon} />}
-      <Text style={textStyle}>{title}</Text>
+      <Text style={[textStyle, disabled && { color: colors.separatorPrimary }]}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };

@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native start & npx react-native run-android",
-    "ios": "react-native start & npx react-native run-ios --simulator=\"iPhone 14 Pro\"",
+    "android": "react-native start & npx react-native run-android --no-packager",
+    "ios": "react-native start & npx react-native run-ios --no-packager --simulator=\"iPhone 14 Pro\"",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",

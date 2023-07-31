@@ -6,6 +6,8 @@ export interface Theme {
   dividerBackground: string;
   greenBackground: string;
   googleBackground: string;
+  userMessageBackground: string;
+  otherMessageBackground: string;
 
   // Separator
   separatorPrimary: string;
@@ -26,6 +28,8 @@ export const lightMode: Theme = {
   dividerBackground: '#EBEBEB',
   greenBackground: '#367c55',
   googleBackground: '#5186ec',
+  userMessageBackground: '#1bdf844f',
+  otherMessageBackground: '#EBEBEB',
 
   // Separator
   separatorPrimary: '#999999',
