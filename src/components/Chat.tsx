@@ -120,9 +120,10 @@ const styles = StyleSheet.create({
   },
   messageText: {
     fontFamily: fonts.gotham,
-    fontWeight: '600',
+    fontWeight: '800',
     fontSize: 13,
     lineHeight: 13,
+    color: colors.textPrimary,
   },
   messageTimeText: {
     fontFamily: fonts.gotham,
@@ -131,6 +132,7 @@ const styles = StyleSheet.create({
     lineHeight: 10,
     alignSelf: 'flex-end',
     marginTop: 5,
+    color: colors.textPrimary,
   },
   btn: {
     borderRadius: 0,
