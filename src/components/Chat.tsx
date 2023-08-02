@@ -171,7 +171,6 @@ export const Chat: FC<ChatProps> = memo(({ navigation }) => {
   const [serverMessages, setServerMessages] = useState<SocketMessage[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [deletedMessageId, setDeletedMessageId] = useState<string>('');
-  console.log("'zxc', 'serverMessages'", serverMessages);
 
   const { userInfo } = useContext(AuthContext);
 
@@ -367,7 +366,7 @@ export const Chat: FC<ChatProps> = memo(({ navigation }) => {
           {messages.map(item => {
             const isUser = item?.senderId === userInfo?.uid;
             const messagesTime = moment(Number(item?.date || 0)).format(
-              'HH:MM',
+              'HH:mm',
             );
             return (
               <TouchableOpacity
