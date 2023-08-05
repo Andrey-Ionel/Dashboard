@@ -9,6 +9,7 @@ import React, {
   useState,
 } from 'react';
 import {
+  Alert,
   Keyboard,
   KeyboardAvoidingView,
   ScrollView,
@@ -21,18 +22,25 @@ import {
 
 import { ScreenWrapper } from './ScreenWrapper';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
-import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { uId } from '../lib/UniqId';
 import { Button } from './Button';
 import { Header } from './Header';
 import { ConfirmModal } from '../modals/ConfirmModal';
 
+import { SocketMessage } from '../store/types';
+
 import colors from '../styles/colors';
 import i18n from 'i18next';
 import { isIos, logError } from '../lib/constants';
 import { fonts } from '../styles/fonts';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import {
+  addMessagesAction,
+  deleteMessageAction,
+  getMessagesAction,
+} from '../store/reducers/chatReducer';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -154,53 +162,51 @@ const styles = StyleSheet.create({
   },
 });
 
-interface SocketMessage {
-  senderId: string;
-  messageId: string;
-  message: string;
-  date: string;
-}
-
 export interface ChatProps {
   navigation: NavigationProp<ParamListBase>;
+  messages: SocketMessage[];
+  error: string;
 }
 
-export const Chat: FC<ChatProps> = memo(({ navigation }) => {
+export const Chat: FC<ChatProps> = memo(({ navigation, messages, error }) => {
   const [serverState, setServerState] = useState('Loading...');
   const [messageText, setMessageText] = useState('');
   const [inputFieldEmpty, setInputFieldEmpty] = useState<boolean>(true);
   const [disableButton, setDisableButton] = useState<boolean>(true);
-  const [serverMessages, setServerMessages] = useState<SocketMessage[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [deletedMessageId, setDeletedMessageId] = useState<string>('');
 
   const { userInfo } = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   const scrollRef = useRef<ScrollView>(null);
   const ws = useRef(new WebSocket('wss://9yfysp-8080.csb.app/')).current;
   const messagesByDate = useMemo(
     () =>
-      serverMessages?.reduce(
-        (acc: { [date: string]: SocketMessage[] }, item) => {
-          const messagesDate = moment(Number(item?.date || 0)).format(
-            'dddd DD/MM/YYYY',
-          );
+      messages?.reduce((acc: { [date: string]: SocketMessage[] }, item) => {
+        const messagesDate = moment(Number(item?.date || 0)).format(
+          'dddd DD/MM/YYYY',
+        );
 
-          if (!acc[messagesDate]) {
-            acc[messagesDate] = [item];
-          } else {
-            acc[messagesDate]?.push(item);
-          }
-          return acc;
-        },
-        {},
-      ),
-    [serverMessages],
+        if (!acc[messagesDate]) {
+          acc[messagesDate] = [item];
+        } else {
+          acc[messagesDate]?.push(item);
+        }
+        return acc;
+      }, {}),
+    [messages],
   );
 
   useEffect(() => {
     getMessages().catch(e => logError(e?.message));
   }, []);
+
+  useEffect(() => {
+    if (error.length) {
+      Alert.alert(i18n.t('errors.mainError'), `"${error}"`);
+    }
+  }, [error.length]);
 
   useEffect(() => {
     const reconnectWebSocket = () => ws;
@@ -221,11 +227,11 @@ export const Chat: FC<ChatProps> = memo(({ navigation }) => {
       setDisableButton(true);
     };
     ws.onmessage = e => {
-      const newMessage = JSON.parse(e?.data);
-      setServerMessages(newMessage);
+      const newMessages: SocketMessage[] = JSON.parse(e?.data);
+      dispatch(addMessagesAction(newMessages));
       setTimeout(handleScrollToBottom, 100);
     };
-  }, [ws]);
+  }, []);
 
   const dismissKeyboard = () => Keyboard.dismiss();
   const showKeyboard = () => Keyboard.isVisible();
@@ -233,10 +239,8 @@ export const Chat: FC<ChatProps> = memo(({ navigation }) => {
 
   const getMessages = async (): Promise<void> => {
     try {
-      await axios.get('https://9yfysp-8080.csb.app/').then(response => {
-        setServerMessages(response?.data);
-        setTimeout(handleScrollToBottom, 100);
-      });
+      dispatch(getMessagesAction());
+      setTimeout(handleScrollToBottom, 200);
     } catch (e: any) {
       logError(e?.message as Error);
     }
@@ -244,9 +248,7 @@ export const Chat: FC<ChatProps> = memo(({ navigation }) => {
 
   const deleteMessage = async (): Promise<void> => {
     try {
-      await axios
-        .delete(`https://9yfysp-8080.csb.app/${deletedMessageId}`)
-        .then(() => getMessages());
+      dispatch(deleteMessageAction(deletedMessageId));
     } catch (e: any) {
       logError(e?.message as Error);
     }
@@ -360,12 +362,12 @@ export const Chat: FC<ChatProps> = memo(({ navigation }) => {
       scrollViewProps={{ ref: scrollRef }}
       fixedComponentTop={renderHeader()}
       fixedComponentBottom={renderBottomContent()}>
-      {Object.entries(messagesByDate)?.map(([date, messages]) => (
+      {Object.entries(messagesByDate)?.map(([date, socketMessages]) => (
         <View key={date}>
           <View style={styles.messageDateContainer}>
             <Text style={styles.messageDateText}>{date}</Text>
           </View>
-          {messages.map(item => {
+          {socketMessages.map(item => {
             const isUser = item?.senderId === userInfo?.uid;
             const messagesTime = moment(Number(item?.date || 0)).format(
               'HH:mm',

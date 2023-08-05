@@ -71,6 +71,7 @@ export const en: ProjectTranslationKeys = {
     otpRequest: 'To many requests. Please, try again later.',
     invalidOTP: 'Invalid verification code. Please, try again.',
     otp: 'Please enter a valid  code',
+    mainError: 'Something went wrong while trying to get messages.',
   },
   inputTitles: {
     required: '*',

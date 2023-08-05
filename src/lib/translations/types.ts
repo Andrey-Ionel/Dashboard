@@ -63,6 +63,7 @@ export interface ProjectTranslationKeys {
     otpRequest: string;
     invalidOTP: string;
     otp: string;
+    mainError: string;
   };
   inputTitles: {
     required: string;

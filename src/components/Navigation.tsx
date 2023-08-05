@@ -6,7 +6,7 @@ import SignInContainer from '../containers/SignInContainer';
 import JoinNowContainer from '../containers/JoinNowContainer';
 import HomeContainer from '../containers/HomeContainer';
 import { PhoneAuth } from './PhoneAuth';
-import { Chat } from './Chat';
+import ChatContainer from '../containers/ChatContainer';
 import { AuthContext } from '../context/AuthContext';
 
 import i18n from '../lib/translations';
@@ -28,7 +28,7 @@ export const Navigation = () => {
             />
             <Stack.Screen
               name="Chat"
-              component={Chat}
+              component={ChatContainer}
               options={{ headerShown: false, orientation: 'portrait' }}
             />
           </>
